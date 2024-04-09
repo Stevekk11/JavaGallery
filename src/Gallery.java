@@ -1,9 +1,14 @@
+import Loaders.ImageLoader;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Gallery extends JFrame {
-    protected HashMap<Image,String> images;
+    protected HashMap<String,Image> images;
     protected JButton load;
     protected JButton exit;
     protected JButton next;
@@ -26,6 +31,10 @@ public class Gallery extends JFrame {
         label = new JLabel("Gallery", SwingConstants.CENTER);
     }
 
+    /**
+     * This method initialises the components
+     */
+
     public void init(){
         setTitle("Gallery");
         setSize(400,400);
@@ -47,6 +56,38 @@ public class Gallery extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setVisible(true);
+        showImages();
+    }
+
+     private void showImages() {
+        load.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ImageLoader imageList = new ImageLoader("Fotky_mallorca");
+                imageList.load();
+                images = imageList.getImages();
+                if (!images.isEmpty()) {
+                    JFrame dialog = new JFrame();
+                    JPanel panel = new JPanel(new GridLayout(10, 10));
+                    for (Map.Entry<String, Image> entry : images.entrySet()) {
+                        Image image = entry.getValue();
+                        String filename = entry.getKey();
+                        ImageIcon imageIcon = new ImageIcon(image.getScaledInstance(100, 100, Image.SCALE_SMOOTH));
+                        JLabel imgLabel = new JLabel(imageIcon);
+                        panel.add(imgLabel);
+                        JLabel filenameLabel = new JLabel(filename);
+                        panel.add(filenameLabel);
+                    }
+                    JScrollPane scrollPane = new JScrollPane(panel);
+                    dialog.add(scrollPane);
+                    dialog.setSize(800, 600);
+                    dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                    dialog.setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(null, "No images found.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
     }
 
     public static void main(String[] args) {
