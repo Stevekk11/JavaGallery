@@ -22,15 +22,17 @@ public class Gallery extends JFrame {
         next = new JButton("Next");
         previous = new JButton("Previous");
         showGrid = new JButton("Show Grid");
-        delete = new JButton("Delete");
-        label = new JLabel();
+        delete = new JButton("Delete image");
+        label = new JLabel("Gallery", SwingConstants.CENTER);
+    }
 
+    public void init(){
         setTitle("Gallery");
         setSize(400,400);
         JPanel buttonPanel = new JPanel(new GridLayout(3,2));
 
         JPanel labelPanel = new JPanel(new BorderLayout());
-        label = new JLabel("Gallery", SwingConstants.CENTER);
+
         labelPanel.add(label, BorderLayout.CENTER);
         add(labelPanel, BorderLayout.NORTH);
         add(buttonPanel, BorderLayout.SOUTH);
@@ -49,5 +51,6 @@ public class Gallery extends JFrame {
 
     public static void main(String[] args) {
         Gallery g = new Gallery();
+        g.init();
     }
 }
