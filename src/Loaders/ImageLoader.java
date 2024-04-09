@@ -1,13 +1,15 @@
 package Loaders;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import main.Gallery;
 
 public class ImageLoader {
-    private HashMap<String, Image> images = new HashMap<String, Image>();
+    private HashMap<String, Image> images;
     private String path;
 
     public ImageLoader(String path) {
@@ -26,8 +28,11 @@ public class ImageLoader {
                 if (file.isFile()) {
                     try {
                         Image image = ImageIO.read(file);
+                        if (image != null) {
+                            images.put(file.getName(), image);
+                        } else JOptionPane.showMessageDialog(null, "Error loading image: "+file.getName(), "Error", JOptionPane.ERROR_MESSAGE);
                         // Store the filename along with the Image object in the HashMap
-                        images.put(file.getName(), image);
+
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
