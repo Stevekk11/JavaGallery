@@ -12,6 +12,9 @@ public class Gallery extends JFrame {
     protected JLabel label;
     protected JButton delete;
 
+    /**
+     * This constructor is used for initialising the Frame
+     */
     public Gallery() {
         images = new HashMap<>();
         load = new JButton("Load");
