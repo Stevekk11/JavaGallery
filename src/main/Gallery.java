@@ -4,20 +4,18 @@ import Loaders.ImageLoader;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Gallery extends JFrame {
-    protected HashMap<String,Image> images;
+    protected HashMap<String, Image> images;
     protected JButton load;
     protected JButton exit;
     protected JButton next;
     protected JButton previous;
     protected JButton showGrid;
-    protected JLabel label;
     protected JButton delete;
 
     /**
@@ -37,10 +35,10 @@ public class Gallery extends JFrame {
      * This method initialises the components
      */
 
-    public void init(){
+    public void init() {
         setTitle("Image Gallery");
-        setSize(400,400);
-        JPanel buttonPanel = new JPanel(new GridLayout(3,2));
+        setSize(400, 400);
+        JPanel buttonPanel = new JPanel(new GridLayout(3, 2));
         add(buttonPanel, BorderLayout.CENTER);
 
         buttonPanel.add(load);
@@ -57,7 +55,7 @@ public class Gallery extends JFrame {
         showImages();
     }
 
-     private void showImages() {
+    private void showImages() {
         load.addActionListener(e -> {
             ImageLoader imageList = new ImageLoader("images");
             imageList.load();
@@ -69,30 +67,52 @@ public class Gallery extends JFrame {
                 JLabel imgLabel = new JLabel();
                 panel.add(imgLabel, BorderLayout.CENTER);
                 AtomicInteger currentIndex = new AtomicInteger(0);
-                imageList.displayImage(images,currentIndex.get(),imgLabel);
+                imageList.displayImage(images, currentIndex.get(), imgLabel);
 
-                previous.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        if(currentIndex.get() > 0){
-                            currentIndex.decrementAndGet();
-                            imageList.displayImage(images,currentIndex.get(),imgLabel);
+                previous.addActionListener(e1 -> {
+                    if (currentIndex.get() > 0) {
+                        currentIndex.decrementAndGet();
+                        imageList.displayImage(images, currentIndex.get(), imgLabel);
+                    }
+                });
+
+                next.addActionListener(e2 -> {
+                    if (currentIndex.get() < images.size() - 1) {
+                        currentIndex.incrementAndGet();
+                        imageList.displayImage(images, currentIndex.get(), imgLabel);
+                    }
+                });
+
+                delete.addActionListener(e3 -> {
+                    if (currentIndex.get() >= 0 && currentIndex.get() < images.size()) {
+                        String filenameToDelete = "";
+                        int i = 0;
+                        for (Map.Entry<String, Image> entry : images.entrySet()) {
+                            if (i == currentIndex.get()) {
+                                filenameToDelete = entry.getKey();
+                                break;
+                            }
+                            i++;
+                        }
+                        if (!filenameToDelete.isEmpty()) {
+                            images.remove(filenameToDelete);
+                            File fileToDelete = new File(filenameToDelete);
+                            if (fileToDelete.exists()) {
+                                if (fileToDelete.delete()) {
+                                    JOptionPane.showMessageDialog(null, "Image deleted successfully");
+                                } else {
+                                    JOptionPane.showMessageDialog(null, "Image could not be deleted");
+                                }
+                            } else JOptionPane.showMessageDialog(null, "File does not exist");
+                            currentIndex.set(0);
+                            imageList.displayImage(images, currentIndex.get(), imgLabel);
                         }
                     }
                 });
 
-                next.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        if(currentIndex.get() < images.size()-1){
-                            currentIndex.incrementAndGet();
-                            imageList.displayImage(images,currentIndex.get(),imgLabel);
-                        }
-                    }
-                });
                 JScrollPane scrollPane = new JScrollPane(panel);
                 dialog.add(scrollPane);
-                dialog.setSize(800,600);
+                dialog.setSize(800, 600);
                 dialog.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
                 dialog.setVisible(true);
             } else {

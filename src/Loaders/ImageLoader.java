@@ -8,8 +8,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import main.Gallery;
-
 public class ImageLoader {
     private HashMap<String, Image> images;
     private String path;
