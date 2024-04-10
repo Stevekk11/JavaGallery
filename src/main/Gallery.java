@@ -110,10 +110,6 @@ public class Gallery extends JFrame {
                     }
                 });
 
-                exit.addActionListener(e4 ->{
-                    System.exit(0);
-                });
-
                 JScrollPane scrollPane = new JScrollPane(panel);
                 dialog.add(scrollPane);
                 dialog.setSize(imageList.getWidth(), imageList.getHeight());
@@ -123,10 +119,44 @@ public class Gallery extends JFrame {
                 JOptionPane.showMessageDialog(null, "No images found.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
+        //Exits
+        exit.addActionListener(e4 -> {
+            System.exit(0);
+        });
+
+        showGrid.addActionListener(e -> {
+            ImageLoader imageList = new ImageLoader("images");
+            imageList.load();
+            images = imageList.getImages();
+            JFrame grid = new JFrame("Grid Images");
+            grid.setLayout(new GridLayout(0, 5)); // Adjust the number of columns as needed
+
+            if (!images.isEmpty()) {
+                for (Map.Entry<String, Image> entry : images.entrySet()) {
+                    // Resize the image to fit within the JLabel
+                    ImageIcon imageIcon = new ImageIcon(entry.getValue().getScaledInstance(entry.getValue().getWidth(null)/8, entry.getValue().getHeight(null)/8, Image.SCALE_SMOOTH)); // Adjust the width and height as needed
+                    JLabel imgLabel = new JLabel(imageIcon);
+                    imgLabel.setHorizontalAlignment(SwingConstants.CENTER); // Center the image within the label
+                    grid.add(imgLabel);
+                }
+                // Set JFrame properties outside the loop
+                grid.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                grid.pack(); // Adjust the size of the JFrame to fit the components
+                grid.setLocationRelativeTo(null); // Center the JFrame on the screen
+                grid.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(null, "No images found.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
     }
 
     public static void main(String[] args) {
-        Gallery g = new Gallery();
-        g.init();
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                Gallery gallery = new Gallery();
+                gallery.init();
+            }
+        });
     }
 }

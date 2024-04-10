@@ -59,7 +59,7 @@ public class ImageLoader {
         if (image != null) {
             ImageIcon icon = new ImageIcon(image.getScaledInstance(width, height, Image.SCALE_SMOOTH));
             label.setIcon(icon);
-            label.setText(filename + (width == 0 ? "" : " (" + width + ")")+(height == 0 ? "" : " (" + height + ")"));
+            label.setText(filename + (width == 0 ? "" : " (" + width + ")")+"x"+(height == 0 ? "" : " (" + height + ")"));
         } else label.setIcon(null);
     }
 
