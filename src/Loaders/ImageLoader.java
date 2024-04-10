@@ -6,6 +6,8 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
+
 import main.Gallery;
 
 public class ImageLoader {
@@ -32,13 +34,35 @@ public class ImageLoader {
                             images.put(file.getName(), image);
                         } else JOptionPane.showMessageDialog(null, "Error loading image: "+file.getName(), "Error", JOptionPane.ERROR_MESSAGE);
                         // Store the filename along with the Image object in the HashMap
-
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
             }
         }
+    }
+    public void displayImage(Map<String, Image> images, int index, JLabel label) {
+        String filename = "";
+        Image image = null;
+        int width = 0;
+        int height = 0;
+        if (index < images.size() && index >= 0) {
+            int i = 0;
+            for (Map.Entry<String, Image> entry : images.entrySet()) {
+                if (i == index) {
+                    filename = entry.getKey();
+                    image = entry.getValue();
+                    width = image.getWidth(null)/4;
+                    height = image.getHeight(null)/4;
+                    break;
+                }
+                i++;
+            }
+        }
+        if (image != null) {
+            ImageIcon icon = new ImageIcon(image.getScaledInstance(width, height, Image.SCALE_SMOOTH));
+            label.setIcon(icon);
+        } else label.setIcon(null);
     }
 
     public HashMap<String, Image> getImages() {
