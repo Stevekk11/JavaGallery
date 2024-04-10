@@ -11,6 +11,7 @@ import java.util.Map;
 public class ImageLoader {
     private HashMap<String, Image> images;
     private String path;
+    private int width, height;
 
     public ImageLoader(String path) {
         this.path = path;
@@ -42,8 +43,6 @@ public class ImageLoader {
     public void displayImage(Map<String, Image> images, int index, JLabel label) {
         String filename = "";
         Image image = null;
-        int width = 0;
-        int height = 0;
         if (index < images.size() && index >= 0) {
             int i = 0;
             for (Map.Entry<String, Image> entry : images.entrySet()) {
@@ -60,10 +59,19 @@ public class ImageLoader {
         if (image != null) {
             ImageIcon icon = new ImageIcon(image.getScaledInstance(width, height, Image.SCALE_SMOOTH));
             label.setIcon(icon);
+            label.setText(filename + (width == 0 ? "" : " (" + width + ")")+(height == 0 ? "" : " (" + height + ")"));
         } else label.setIcon(null);
     }
 
     public HashMap<String, Image> getImages() {
         return images;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
     }
 }

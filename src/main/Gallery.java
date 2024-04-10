@@ -96,7 +96,7 @@ public class Gallery extends JFrame {
                         }
                         if (!filenameToDelete.isEmpty()) {
                             images.remove(filenameToDelete);
-                            File fileToDelete = new File(filenameToDelete);
+                            File fileToDelete = new File("images/" + filenameToDelete);
                             if (fileToDelete.exists()) {
                                 if (fileToDelete.delete()) {
                                     JOptionPane.showMessageDialog(null, "Image deleted successfully");
@@ -110,9 +110,13 @@ public class Gallery extends JFrame {
                     }
                 });
 
+                exit.addActionListener(e4 ->{
+                    System.exit(0);
+                });
+
                 JScrollPane scrollPane = new JScrollPane(panel);
                 dialog.add(scrollPane);
-                dialog.setSize(800, 600);
+                dialog.setSize(imageList.getWidth(), imageList.getHeight());
                 dialog.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
                 dialog.setVisible(true);
             } else {
