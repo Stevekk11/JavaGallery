@@ -53,13 +53,11 @@ public class ImageLoader {
      * @param label
      */
     public void displayImage(Map<String, Image> images, int index, JLabel label) {
-        String filename = "";
         Image image = null;
         if (index < images.size() && index >= 0) {
             int i = 0;
             for (Map.Entry<String, Image> entry : images.entrySet()) {
                 if (i == index) {
-                    filename = entry.getKey();
                     image = entry.getValue();
                     width = image.getWidth(null) / 4;
                     height = image.getHeight(null) / 4;
@@ -71,7 +69,6 @@ public class ImageLoader {
         if (image != null) {
             ImageIcon icon = new ImageIcon(image.getScaledInstance(width, height, Image.SCALE_SMOOTH));
             label.setIcon(icon);
-            label.setText(filename + (width == 0 ? "" : " (" + width + ")") + "x" + (height == 0 ? "" : " (" + height + ")"));
         } else label.setIcon(null);
     }
 
