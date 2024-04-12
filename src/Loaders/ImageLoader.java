@@ -18,6 +18,9 @@ public class ImageLoader {
         this.images = new HashMap<>();
     }
 
+    /**
+     * This method is used to load the image directory
+     */
     public void load() {
         File dir = new File(path);
         if (!dir.exists()) {
@@ -31,7 +34,8 @@ public class ImageLoader {
                         Image image = ImageIO.read(file);
                         if (image != null) {
                             images.put(file.getName(), image);
-                        } else JOptionPane.showMessageDialog(null, "Error loading image: "+file.getName(), "Error", JOptionPane.ERROR_MESSAGE);
+                        } else
+                            JOptionPane.showMessageDialog(null, "Error loading image: " + file.getName(), "Error", JOptionPane.ERROR_MESSAGE);
                         // Store the filename along with the Image object in the HashMap
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -40,6 +44,14 @@ public class ImageLoader {
             }
         }
     }
+
+    /**
+     * This method is used to display the image
+     *
+     * @param images the list of images
+     * @param index  the current image
+     * @param label
+     */
     public void displayImage(Map<String, Image> images, int index, JLabel label) {
         String filename = "";
         Image image = null;
@@ -49,8 +61,8 @@ public class ImageLoader {
                 if (i == index) {
                     filename = entry.getKey();
                     image = entry.getValue();
-                    width = image.getWidth(null)/4;
-                    height = image.getHeight(null)/4;
+                    width = image.getWidth(null) / 4;
+                    height = image.getHeight(null) / 4;
                     break;
                 }
                 i++;
@@ -59,8 +71,34 @@ public class ImageLoader {
         if (image != null) {
             ImageIcon icon = new ImageIcon(image.getScaledInstance(width, height, Image.SCALE_SMOOTH));
             label.setIcon(icon);
-            label.setText(filename + (width == 0 ? "" : " (" + width + ")")+"x"+(height == 0 ? "" : " (" + height + ")"));
+            label.setText(filename + (width == 0 ? "" : " (" + width + ")") + "x" + (height == 0 ? "" : " (" + height + ")"));
         } else label.setIcon(null);
+    }
+
+    public void displayImageProperties(String filename) {
+        try {
+            File file = new File(path, filename);
+            Image image = images.get(filename);
+            width = image.getWidth(null);
+            height = image.getHeight(null);
+            long fileSize = file.length();
+
+            StringBuilder properties = new StringBuilder();
+            properties.append("Filename: ").append(filename).append("\n");
+            properties.append("Resolution: ").append(width).append("x").append(height).append("\n");
+            properties.append("File Size: ").append(fileSize / 1024).append(" kB").append("\n");
+            properties.append("Megapixels: ").append((width * height)/1000000.0).append("MP").append("\n");
+            JFrame info = new JFrame("Image properties");
+            JTextArea text = new JTextArea(properties.toString());
+            info.add(text);
+            info.setSize(300,150);
+            info.setLocationRelativeTo(null);
+            info.setVisible(true);
+            text.setEditable(false);
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error reading image properties", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     public HashMap<String, Image> getImages() {
@@ -75,3 +113,4 @@ public class ImageLoader {
         return height;
     }
 }
+

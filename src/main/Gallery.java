@@ -4,6 +4,8 @@ import Loaders.ImageLoader;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
@@ -119,7 +121,7 @@ public class Gallery extends JFrame {
                 JOptionPane.showMessageDialog(null, "No images found.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
-        //Exits
+        //Exit
         exit.addActionListener(e4 -> {
             System.exit(0);
         });
@@ -128,15 +130,21 @@ public class Gallery extends JFrame {
             ImageLoader imageList = new ImageLoader("images");
             imageList.load();
             images = imageList.getImages();
-            JFrame grid = new JFrame("Grid Images");
+            JFrame grid = new JFrame("Overview of images - click an image for properties and editing");
             grid.setLayout(new GridLayout(0, 5)); // Adjust the number of columns as needed
 
             if (!images.isEmpty()) {
                 for (Map.Entry<String, Image> entry : images.entrySet()) {
                     // Resize the image to fit within the JLabel
-                    ImageIcon imageIcon = new ImageIcon(entry.getValue().getScaledInstance(entry.getValue().getWidth(null)/8, entry.getValue().getHeight(null)/8, Image.SCALE_SMOOTH)); // Adjust the width and height as needed
+                    ImageIcon imageIcon = new ImageIcon(entry.getValue().getScaledInstance(entry.getValue().getWidth(null)/10, entry.getValue().getHeight(null)/10, Image.SCALE_SMOOTH)); // Adjust the width and height as needed
                     JLabel imgLabel = new JLabel(imageIcon);
                     imgLabel.setHorizontalAlignment(SwingConstants.CENTER); // Center the image within the label
+                    imgLabel.addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                            imageList.displayImageProperties(entry.getKey());
+                        }
+                    });
                     grid.add(imgLabel);
                 }
                 // Set JFrame properties outside the loop
