@@ -122,9 +122,7 @@ public class Gallery extends JFrame {
             }
         });
         //Exit
-        exit.addActionListener(e4 -> {
-            System.exit(0);
-        });
+        exit.addActionListener(e4 -> System.exit(0));
 
         showGrid.addActionListener(e -> {
             ImageLoader imageList = new ImageLoader("images");
@@ -159,12 +157,9 @@ public class Gallery extends JFrame {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                Gallery gallery = new Gallery();
-                gallery.init();
-            }
+        SwingUtilities.invokeLater(() -> {
+            Gallery gallery = new Gallery();
+            gallery.init();
         });
     }
 }

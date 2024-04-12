@@ -75,6 +75,17 @@ public class ImageLoader {
         } else label.setIcon(null);
     }
 
+    private void displayImage(String filename) {
+        Image image = images.get(filename);
+        JFrame frame = new JFrame(filename);
+        if (image != null) {
+            ImageIcon icon = new ImageIcon(image.getScaledInstance(width/5, height/5, Image.SCALE_SMOOTH));
+            frame.add(new JLabel(icon));
+            frame.pack();
+            frame.setVisible(true);
+        }
+    }
+
     public void displayImageProperties(String filename) {
         try {
             File file = new File(path, filename);
@@ -87,11 +98,16 @@ public class ImageLoader {
             properties.append("Filename: ").append(filename).append("\n");
             properties.append("Resolution: ").append(width).append("x").append(height).append("\n");
             properties.append("File Size: ").append(fileSize / 1024).append(" kB").append("\n");
-            properties.append("Megapixels: ").append((width * height)/1000000.0).append("MP").append("\n");
+            properties.append("Megapixels: ").append((width * height) / 1000000.0).append("MP").append("\n");
+
             JFrame info = new JFrame("Image properties");
             JTextArea text = new JTextArea(properties.toString());
-            info.add(text);
-            info.setSize(300,150);
+            JButton showImageButton = new JButton("Show Image");
+            showImageButton.addActionListener(e -> displayImage(filename));
+
+            info.add(showImageButton, BorderLayout.SOUTH);
+            info.add(text, BorderLayout.CENTER);
+            info.setSize(300, 150);
             info.setLocationRelativeTo(null);
             info.setVisible(true);
             text.setEditable(false);
