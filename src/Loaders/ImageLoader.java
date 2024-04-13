@@ -117,13 +117,5 @@ public class ImageLoader {
     public HashMap<String, Image> getImages() {
         return images;
     }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
 }
 

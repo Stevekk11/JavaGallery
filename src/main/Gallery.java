@@ -1,5 +1,6 @@
 package main;
 
+import Editors.ImageEditor;
 import Loaders.ImageLoader;
 
 import javax.swing.*;
@@ -50,6 +51,7 @@ public class Gallery extends JFrame {
         add(buttonPanel, BorderLayout.CENTER);
 
         buttonPanel.add(load);
+        load.setBackground(Color.ORANGE);
         buttonPanel.add(exit);
         buttonPanel.add(next);
         buttonPanel.add(previous);
@@ -67,6 +69,9 @@ public class Gallery extends JFrame {
 
     ImageLoader imageList = new ImageLoader("images");
 
+    /**
+     * This method is used to initialize the components and to load the images and buttons
+     */
     private void showImages() {
         load.addActionListener(e -> {
 
@@ -88,7 +93,7 @@ public class Gallery extends JFrame {
                     }
                 });
 
-                next.addActionListener(e2 -> {
+                next.addActionListener(e1 -> {
                     if (currentIndex.get() < images.size() - 1) {
                         currentIndex.incrementAndGet();
                         imageList.displayImage(images, currentIndex.get(), imgLabel);
@@ -96,7 +101,7 @@ public class Gallery extends JFrame {
                     }
                 });
 
-                delete.addActionListener(e3 -> {
+                delete.addActionListener(e1 -> {
                     if (currentIndex.get() >= 0 && currentIndex.get() < images.size()) {
                         String filenameToDelete = "";
                         int i = 0;
@@ -124,6 +129,10 @@ public class Gallery extends JFrame {
                     }
                 });
 
+                edit.addActionListener(e1 -> {
+                    ImageEditor editor = new ImageEditor();
+                });
+
                 JScrollPane scrollPane = new JScrollPane(panel);
                 dialog.add(scrollPane);
                 dialog.pack();
@@ -134,8 +143,8 @@ public class Gallery extends JFrame {
             }
         });
 
-        properties.addActionListener(e5 -> {
-            String filename = "";
+        properties.addActionListener(e -> {
+            String filename;
             int index = currentIndex.get();
             if (index >= 0) {
                 int i = 0;
@@ -149,10 +158,9 @@ public class Gallery extends JFrame {
                     i++;
                 }
             }
-
         });
         //Exit
-        exit.addActionListener(e4 -> System.exit(0));
+        exit.addActionListener(e -> System.exit(0));
         //show grid of images
         showGrid.addActionListener(e -> {
             ImageLoader imageList = new ImageLoader("images");
