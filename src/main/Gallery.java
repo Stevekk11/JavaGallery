@@ -1,6 +1,7 @@
 package main;
 
 import Editors.ImageEditor;
+import Editors.ZoomStrategy;
 import Loaders.ImageLoader;
 
 import javax.swing.*;
@@ -131,12 +132,13 @@ public class Gallery extends JFrame {
 
                 edit.addActionListener(e1 -> {
                     ImageEditor editor = new ImageEditor();
+                    editor.init(images, currentIndex.get(), imgLabel);
                 });
 
                 JScrollPane scrollPane = new JScrollPane(panel);
                 dialog.add(scrollPane);
                 dialog.pack();
-                dialog.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+                dialog.setDefaultCloseOperation(EXIT_ON_CLOSE);
                 dialog.setVisible(true);
             } else {
                 JOptionPane.showMessageDialog(null, "No images found.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -151,7 +153,6 @@ public class Gallery extends JFrame {
                 for (Map.Entry<String, Image> entry : images.entrySet()) {
                     if (i == index) {
                         filename = entry.getKey();
-                        System.out.println(index + filename);
                         imageList.displayImageProperties(filename);
                         break;
                     }
