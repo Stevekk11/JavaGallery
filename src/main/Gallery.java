@@ -1,8 +1,6 @@
 package main;
-
 import Editors.ImageEditor;
 import Loaders.ImageLoader;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -38,36 +36,40 @@ public class Gallery extends JFrame {
         edit = new JButton("Edit");
         properties = new JButton("Properties");
         currentIndex = new AtomicInteger(0);
+        init();
+        showImages();
     }
-
     /**
-     * This method initialises the components
+     * Helper method
      */
-
-    public void init() {
+    private void init(){
         setTitle("Image Gallery");
-        setSize(400, 400);
+        setSize(600, 400);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setVisible(true);
+        //The panel which will have the buttons
         JPanel buttonPanel = new JPanel(new GridLayout(3, 3));
         add(buttonPanel, BorderLayout.CENTER);
 
         buttonPanel.add(load);
+        load.setFont(new Font("Arial", Font.BOLD, 20));
         load.setBackground(Color.ORANGE);
         buttonPanel.add(exit);
+        exit.setIcon(new ImageIcon("icons/exit.png"));
+        exit.setFont(new Font("Arial", Font.BOLD, 20));
         buttonPanel.add(next);
         buttonPanel.add(previous);
         buttonPanel.add(showGrid);
         buttonPanel.add(delete);
         delete.setBackground(Color.RED);
+        delete.setIcon(new ImageIcon("icons/delete.png"));
+        delete.setVerticalTextPosition(SwingConstants.TOP);
+        delete.setHorizontalTextPosition(SwingConstants.CENTER);
         buttonPanel.add(edit);
         buttonPanel.add(properties);
-
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-        setVisible(true);
-        //shows the images
-        showImages();
     }
-
+    //creates a new instance to load the images
     ImageLoader imageList = new ImageLoader("images");
 
     /**
@@ -131,8 +133,9 @@ public class Gallery extends JFrame {
                 });
 
                 edit.addActionListener(e1 -> {
-                    ImageEditor editor = new ImageEditor();
-                    editor.editImage(images, currentIndex.get(), imgLabel);
+                    SwingUtilities.invokeLater(()->{
+                        ImageEditor editor = new ImageEditor();
+                        editor.editImage(images, currentIndex.get(), imgLabel);});
                 });
 
                 JScrollPane scrollPane = new JScrollPane(panel);
@@ -198,7 +201,6 @@ public class Gallery extends JFrame {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             Gallery gallery = new Gallery();
-            gallery.init();
         });
     }
 }

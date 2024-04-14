@@ -30,7 +30,7 @@ public class ZoomStrategy implements ImageEditStrategy {
                     int i = 0;
                     for (Map.Entry<String, Image> entry : images.entrySet()) {
                         if (i == index) {
-                            image = entry.getValue();
+                            image = entry.getValue().getScaledInstance(entry.getValue().getWidth(null)/4, entry.getValue().getHeight(null)/4, Image.SCALE_SMOOTH);
                             // Perform zoom operation on the image
                             Image zoomedImage = zoomImage(image, zoomLevel);
                             ImageIcon icon = new ImageIcon(zoomedImage);

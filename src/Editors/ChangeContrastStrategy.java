@@ -3,6 +3,7 @@ package Editors;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.Hashtable;
 import java.util.Map;
 
 public class ChangeContrastStrategy implements ImageEditStrategy {
@@ -14,20 +15,35 @@ public class ChangeContrastStrategy implements ImageEditStrategy {
     public void editImage(Map<String, Image> images, int index, JLabel label) {
         JFrame frame = new JFrame("Change Contrast");
         JSlider slider = new JSlider(JSlider.HORIZONTAL, -100, 100, 0);
-        frame.add(slider);
+        JLabel valueLabel = new JLabel("Current Value: 0");
+        Hashtable<Integer, JLabel> labelTable = new Hashtable<>();
+
+        slider.setPaintTicks(true);
+        slider.setPaintLabels(true);
+        slider.setMajorTickSpacing(50);
+
+        labelTable.put(-100, new JLabel("-100"));
+        labelTable.put(0, new JLabel("0"));
+        labelTable.put(100, new JLabel("100"));
+        slider.setLabelTable(labelTable);
+
+        frame.add(slider, BorderLayout.CENTER);
+        frame.add(valueLabel, BorderLayout.SOUTH);
         frame.setSize(250, 100);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setVisible(true);
+
         slider.addChangeListener(e -> {
             int value = slider.getValue();
+            valueLabel.setText("Current Value: " + value);
             Image image;
             if (!slider.getValueIsAdjusting()) {
                 if (index < images.size() && index >= 0) {
                     int i = 0;
                     for (Map.Entry<String, Image> entry : images.entrySet()) {
                         if (i == index) {
-                            image = entry.getValue().getScaledInstance(entry.getValue().getWidth(null)/4, entry.getValue().getHeight(null)/4, Image.SCALE_SMOOTH);
+                            image = entry.getValue().getScaledInstance(entry.getValue().getWidth(null) / 4, entry.getValue().getHeight(null) / 4, Image.SCALE_SMOOTH);
                             Image changedImage = applyContrast(image, value);
                             ImageIcon icon = new ImageIcon(changedImage);
                             label.setIcon(icon);
