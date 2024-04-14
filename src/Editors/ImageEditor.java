@@ -30,8 +30,9 @@ public class ImageEditor extends JFrame implements ImageEditStrategy{
         panel.add(changeSize);
         panel.add(changeContrast);
         panel.add(changeBrightness);
-        frame.setSize(700, 400);
         frame.add(panel);
+
+        frame.setSize(700, 400);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);

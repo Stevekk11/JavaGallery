@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class ImageLoader {
     private HashMap<String, Image> images;
-    private String path;
+    private final String path;
     private int width, height;
 
     public ImageLoader(String path) {
@@ -50,7 +50,7 @@ public class ImageLoader {
      *
      * @param images the list of images
      * @param index  the current image
-     * @param label
+     * @param label image label
      */
     public void displayImage(Map<String, Image> images, int index, JLabel label) {
         Image image = null;
@@ -72,6 +72,10 @@ public class ImageLoader {
         } else label.setIcon(null);
     }
 
+    /**
+     * Helper method
+     * @param filename filename of the image
+     */
     private void displayImage(String filename) {
         Image image = images.get(filename);
         JFrame frame = new JFrame(filename);
@@ -83,6 +87,10 @@ public class ImageLoader {
         }
     }
 
+    /**
+     * Method for displaying the image properties
+     * @param filename filename of the image
+     */
     public void displayImageProperties(String filename) {
         try {
             File file = new File(path, filename);

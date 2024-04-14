@@ -15,9 +15,11 @@ public class ZoomStrategy implements ImageEditStrategy {
         JFrame zoomLevelFrame = new JFrame("Zoom Level");
         JButton zoomLevelButton = new JButton("Zoom");
         JTextArea zoomLevelField = new JTextArea();
+        JLabel zoomLevelLabel = new JLabel("Enter your zoom level, don't enter large numbers");
         zoomLevelField.setEditable(true);
         zoomLevelFrame.add(zoomLevelField, BorderLayout.CENTER);
-        zoomLevelFrame.setSize(250, 100);
+        zoomLevelFrame.add(zoomLevelLabel, BorderLayout.NORTH);
+        zoomLevelFrame.setSize(300, 150);
         zoomLevelFrame.setVisible(true);
         zoomLevelFrame.setLocationRelativeTo(null);
         zoomLevelFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -43,6 +45,8 @@ public class ZoomStrategy implements ImageEditStrategy {
                 }
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(zoomLevelFrame, "Invalid zoom level. Please enter a valid number.");
+            } catch (IllegalArgumentException ex) {
+                JOptionPane.showMessageDialog(zoomLevelFrame, "Invalid zoom level. Please enter a positive number.");
             }
         });
         zoomLevelFrame.add(zoomLevelButton, BorderLayout.SOUTH);

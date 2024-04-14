@@ -9,7 +9,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
-
+//all the needed components
 public class Gallery extends JFrame {
     protected HashMap<String, Image> images;
     protected JButton load;
@@ -44,30 +44,52 @@ public class Gallery extends JFrame {
      */
     private void init(){
         setTitle("Image Gallery");
-        setSize(600, 400);
+        setSize(650, 470);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setVisible(true);
         //The panel which will have the buttons
         JPanel buttonPanel = new JPanel(new GridLayout(3, 3));
         add(buttonPanel, BorderLayout.CENTER);
-
+        //add all things
         buttonPanel.add(load);
         load.setFont(new Font("Arial", Font.BOLD, 20));
-        load.setBackground(Color.ORANGE);
+        load.setIcon(new ImageIcon("icons/load.png"));
+        load.setHorizontalTextPosition(SwingConstants.CENTER);
+
         buttonPanel.add(exit);
         exit.setIcon(new ImageIcon("icons/exit.png"));
         exit.setFont(new Font("Arial", Font.BOLD, 20));
+
         buttonPanel.add(next);
+        next.setFont(new Font("Arial", Font.BOLD, 20));
+        next.setIcon(new ImageIcon("icons/next.png"));
+        next.setVerticalTextPosition(SwingConstants.TOP);
+        next.setHorizontalTextPosition(SwingConstants.CENTER);
+
         buttonPanel.add(previous);
+        previous.setFont(new Font("Arial", Font.BOLD, 20));
+        previous.setIcon(new ImageIcon("icons/prev.png"));
+        previous.setVerticalTextPosition(SwingConstants.TOP);
+        previous.setHorizontalTextPosition(SwingConstants.CENTER);
+
         buttonPanel.add(showGrid);
+        showGrid.setFont(new Font("Arial", Font.BOLD, 20));
+
         buttonPanel.add(delete);
         delete.setBackground(Color.RED);
         delete.setIcon(new ImageIcon("icons/delete.png"));
         delete.setVerticalTextPosition(SwingConstants.TOP);
         delete.setHorizontalTextPosition(SwingConstants.CENTER);
+        delete.setFont(new Font("Arial", Font.BOLD, 13));
+
         buttonPanel.add(edit);
+        edit.setFont(new Font("Arial", Font.BOLD, 20));
+        edit.setIcon(new ImageIcon("icons/edit.png"));
+
         buttonPanel.add(properties);
+        properties.setFont(new Font("Arial", Font.BOLD, 20));
+        properties.setIcon(new ImageIcon("icons/properties.png"));
     }
     //creates a new instance to load the images
     ImageLoader imageList = new ImageLoader("images");
@@ -77,17 +99,17 @@ public class Gallery extends JFrame {
      */
     private void showImages() {
         load.addActionListener(e -> {
-
+            //load the images form folder
             imageList.load();
             images = imageList.getImages();
-
+            //check if the folder is empty
             if (!images.isEmpty()) {
                 JFrame dialog = new JFrame();
                 JPanel panel = new JPanel(new BorderLayout());
                 JLabel imgLabel = new JLabel();
                 panel.add(imgLabel, BorderLayout.CENTER);
                 imageList.displayImage(images, currentIndex.get(), imgLabel);
-
+                //previous image
                 previous.addActionListener(e1 -> {
                     if (currentIndex.get() > 0) {
                         currentIndex.decrementAndGet();
@@ -95,7 +117,7 @@ public class Gallery extends JFrame {
                         dialog.pack();
                     }
                 });
-
+                //next image
                 next.addActionListener(e1 -> {
                     if (currentIndex.get() < images.size() - 1) {
                         currentIndex.incrementAndGet();
@@ -103,7 +125,7 @@ public class Gallery extends JFrame {
                         dialog.pack();
                     }
                 });
-
+                //delete the image
                 delete.addActionListener(e1 -> {
                     if (currentIndex.get() >= 0 && currentIndex.get() < images.size()) {
                         String filenameToDelete = "";
@@ -131,7 +153,7 @@ public class Gallery extends JFrame {
                         }
                     }
                 });
-
+                //edit the image
                 edit.addActionListener(e1 -> {
                     SwingUtilities.invokeLater(()->{
                         ImageEditor editor = new ImageEditor();
@@ -143,11 +165,12 @@ public class Gallery extends JFrame {
                 dialog.pack();
                 dialog.setDefaultCloseOperation(EXIT_ON_CLOSE);
                 dialog.setVisible(true);
+                dialog.setTitle("Image: "+currentIndex);
             } else {
                 JOptionPane.showMessageDialog(null, "No images found.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
-
+        //display the properties such as filename, size
         properties.addActionListener(e -> {
             String filename;
             int index = currentIndex.get();
