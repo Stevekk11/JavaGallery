@@ -42,6 +42,9 @@ public class ImageEditor extends JFrame implements ImageEditStrategy{
              ZoomStrategy strategy = new ZoomStrategy();
              strategy.editImage(images, index, label);
         });
-
+        changeContrast.addActionListener(e -> {
+            ChangeContrastStrategy strategy = new ChangeContrastStrategy();
+            strategy.editImage(images, index, label);
+        });
     }
 }

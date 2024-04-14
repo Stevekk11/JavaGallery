@@ -21,14 +21,17 @@ public class ChangeContrastStrategy implements ImageEditStrategy {
         frame.setVisible(true);
         slider.addChangeListener(e -> {
             int value = slider.getValue();
+            Image image;
             if (!slider.getValueIsAdjusting()) {
                 if (index < images.size() && index >= 0) {
                     int i = 0;
                     for (Map.Entry<String, Image> entry : images.entrySet()) {
                         if (i == index) {
-                            Image image = applyContrast(entry.getValue(), value);
-                            label.setIcon(new ImageIcon(image));
-                            label.repaint();
+                            image = entry.getValue().getScaledInstance(entry.getValue().getWidth(null)/4, entry.getValue().getHeight(null)/4, Image.SCALE_SMOOTH);
+                            Image changedImage = applyContrast(image, value);
+                            ImageIcon icon = new ImageIcon(changedImage);
+                            label.setIcon(icon);
+                            label.repaint();//update
                             break;// Exit the loop after applying contrast to the selected image
                         }
                         i++;

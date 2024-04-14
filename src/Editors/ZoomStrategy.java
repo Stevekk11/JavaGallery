@@ -46,7 +46,6 @@ public class ZoomStrategy implements ImageEditStrategy {
             }
         });
         zoomLevelFrame.add(zoomLevelButton, BorderLayout.SOUTH);
-        zoomLevelFrame.setVisible(true);
     }
 
     /**
