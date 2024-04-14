@@ -1,7 +1,6 @@
 package main;
 
 import Editors.ImageEditor;
-import Editors.ZoomStrategy;
 import Loaders.ImageLoader;
 
 import javax.swing.*;
@@ -58,6 +57,7 @@ public class Gallery extends JFrame {
         buttonPanel.add(previous);
         buttonPanel.add(showGrid);
         buttonPanel.add(delete);
+        delete.setBackground(Color.RED);
         buttonPanel.add(edit);
         buttonPanel.add(properties);
 
@@ -132,7 +132,7 @@ public class Gallery extends JFrame {
 
                 edit.addActionListener(e1 -> {
                     ImageEditor editor = new ImageEditor();
-                    editor.init(images, currentIndex.get(), imgLabel);
+                    editor.editImage(images, currentIndex.get(), imgLabel);
                 });
 
                 JScrollPane scrollPane = new JScrollPane(panel);
@@ -167,7 +167,7 @@ public class Gallery extends JFrame {
             ImageLoader imageList = new ImageLoader("images");
             imageList.load();
             images = imageList.getImages();
-            JFrame grid = new JFrame("Overview of images - click an image for properties and editing");
+            JFrame grid = new JFrame("Overview of images - click an image for properties");
             grid.setLayout(new GridLayout(0, 5)); // Adjust the number of columns as needed
 
             if (!images.isEmpty()) {

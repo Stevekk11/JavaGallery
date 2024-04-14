@@ -17,7 +17,7 @@ public class ZoomStrategy implements ImageEditStrategy {
         JTextArea zoomLevelField = new JTextArea();
         zoomLevelField.setEditable(true);
         zoomLevelFrame.add(zoomLevelField, BorderLayout.CENTER);
-        zoomLevelFrame.setSize(200, 100);
+        zoomLevelFrame.setSize(250, 100);
         zoomLevelFrame.setVisible(true);
         zoomLevelFrame.setLocationRelativeTo(null);
         zoomLevelFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
