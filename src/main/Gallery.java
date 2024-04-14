@@ -9,6 +9,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
+
 //all the needed components
 public class Gallery extends JFrame {
     protected HashMap<String, Image> images;
@@ -20,7 +21,11 @@ public class Gallery extends JFrame {
     protected JButton delete;
     protected JButton properties;
     protected JButton edit;
+    protected JButton pack;
     protected AtomicInteger currentIndex;
+    protected JFrame dialog;
+    protected String path;
+    protected ImageLoader imageList;
 
     /**
      * This constructor is used for initialising the Frame
@@ -36,13 +41,14 @@ public class Gallery extends JFrame {
         edit = new JButton("Edit");
         properties = new JButton("Properties");
         currentIndex = new AtomicInteger(0);
+        pack = new JButton("Pack");
         init();
         showImages();
     }
     /**
      * Helper method
      */
-    private void init(){
+    private void init() {
         setTitle("Image Gallery");
         setSize(650, 470);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -90,9 +96,19 @@ public class Gallery extends JFrame {
         buttonPanel.add(properties);
         properties.setFont(new Font("Arial", Font.BOLD, 20));
         properties.setIcon(new ImageIcon("icons/properties.png"));
+
+        buttonPanel.add(pack);
+        pack.setFont(new Font("Arial", Font.BOLD, 20));
+
+        JFileChooser chooser = new JFileChooser();
+        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int result = chooser.showOpenDialog(null);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File selectedDirectory = chooser.getSelectedFile();
+            path = selectedDirectory.getAbsolutePath();
+            imageList = new ImageLoader(path);
+        } else System.exit(0);
     }
-    //creates a new instance to load the images
-    ImageLoader imageList = new ImageLoader("images");
 
     /**
      * This method is used to initialize the components and to load the images and buttons
@@ -104,7 +120,7 @@ public class Gallery extends JFrame {
             images = imageList.getImages();
             //check if the folder is empty
             if (!images.isEmpty()) {
-                JFrame dialog = new JFrame();
+                dialog = new JFrame();
                 JPanel panel = new JPanel(new BorderLayout());
                 JLabel imgLabel = new JLabel();
                 panel.add(imgLabel, BorderLayout.CENTER);
@@ -155,9 +171,10 @@ public class Gallery extends JFrame {
                 });
                 //edit the image
                 edit.addActionListener(e1 -> {
-                    SwingUtilities.invokeLater(()->{
+                    SwingUtilities.invokeLater(() -> {
                         ImageEditor editor = new ImageEditor();
-                        editor.editImage(images, currentIndex.get(), imgLabel);});
+                        editor.editImage(images, currentIndex.get(), imgLabel);
+                    });
                 });
 
                 JScrollPane scrollPane = new JScrollPane(panel);
@@ -165,7 +182,7 @@ public class Gallery extends JFrame {
                 dialog.pack();
                 dialog.setDefaultCloseOperation(EXIT_ON_CLOSE);
                 dialog.setVisible(true);
-                dialog.setTitle("Image: "+currentIndex);
+                dialog.setTitle("Image: " + currentIndex);
             } else {
                 JOptionPane.showMessageDialog(null, "No images found.", "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -219,6 +236,7 @@ public class Gallery extends JFrame {
                 JOptionPane.showMessageDialog(null, "No images found.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
+        pack.addActionListener(e -> dialog.pack());
     }
 
     public static void main(String[] args) {

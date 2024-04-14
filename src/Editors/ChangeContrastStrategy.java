@@ -1,8 +1,12 @@
 package Editors;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Hashtable;
 import java.util.Map;
 
@@ -16,11 +20,13 @@ public class ChangeContrastStrategy implements ImageEditStrategy {
         JFrame frame = new JFrame("Change Contrast");
         JSlider slider = new JSlider(JSlider.HORIZONTAL, -100, 100, 0);
         JLabel valueLabel = new JLabel("Current Value: 0");
+        JButton saveButton = new JButton("Save");
         Hashtable<Integer, JLabel> labelTable = new Hashtable<>();
 
         slider.setPaintTicks(true);
         slider.setPaintLabels(true);
         slider.setMajorTickSpacing(50);
+        slider.setMinorTickSpacing(20);
 
         labelTable.put(-100, new JLabel("-100"));
         labelTable.put(0, new JLabel("0"));
@@ -29,7 +35,8 @@ public class ChangeContrastStrategy implements ImageEditStrategy {
 
         frame.add(slider, BorderLayout.CENTER);
         frame.add(valueLabel, BorderLayout.SOUTH);
-        frame.setSize(250, 100);
+        frame.add(saveButton, BorderLayout.NORTH);
+        frame.setSize(300, 150);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setVisible(true);
@@ -38,14 +45,37 @@ public class ChangeContrastStrategy implements ImageEditStrategy {
             int value = slider.getValue();
             valueLabel.setText("Current Value: " + value);
             Image image;
+            Image changedImage;
             if (!slider.getValueIsAdjusting()) {
                 if (index < images.size() && index >= 0) {
                     int i = 0;
                     for (Map.Entry<String, Image> entry : images.entrySet()) {
                         if (i == index) {
                             image = entry.getValue().getScaledInstance(entry.getValue().getWidth(null) / 4, entry.getValue().getHeight(null) / 4, Image.SCALE_SMOOTH);
-                            Image changedImage = applyContrast(image, value);
+                            changedImage = applyContrast(image, value);
                             ImageIcon icon = new ImageIcon(changedImage);
+                            saveButton.addActionListener(e1 -> {
+                                //complete
+                                JFileChooser fileChooser = new JFileChooser();
+                                fileChooser.setDialogTitle("Specify a file to save");
+
+                                // Set a default file name (optional)
+                                fileChooser.setSelectedFile(new File(entry.getKey()+"_changed.png"));
+
+                                int userSelection = fileChooser.showSaveDialog(null);
+
+                                if (userSelection == JFileChooser.APPROVE_OPTION) {
+                                    File fileToSave = fileChooser.getSelectedFile();
+                                    try {
+                                        // Write the changedImage to the selected file as a PNG image
+                                        ImageIO.write((RenderedImage) changedImage, "png", fileToSave);
+                                        JOptionPane.showMessageDialog(null, "Image saved successfully!");
+                                    } catch (IOException ex) {
+                                        ex.printStackTrace();
+                                        JOptionPane.showMessageDialog(null, "Error saving image: " + ex.getMessage());
+                                    }
+                                }
+                            });
                             label.setIcon(icon);
                             label.repaint();//update
                             break;// Exit the loop after applying contrast to the selected image
@@ -114,5 +144,4 @@ public class ChangeContrastStrategy implements ImageEditStrategy {
     private int clamp(int value) {
         return Math.min(Math.max(value, 0), 255);
     }
-
 }
