@@ -50,10 +50,11 @@ public class Gallery extends JFrame {
      */
     private void init() {
         setTitle("Image Gallery");
-        setSize(650, 470);
+        setSize(750, 470);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setVisible(true);
+        setIconImage(new ImageIcon("icons/photo.png").getImage());
         //The panel which will have the buttons
         JPanel buttonPanel = new JPanel(new GridLayout(3, 3));
         add(buttonPanel, BorderLayout.CENTER);
@@ -99,6 +100,7 @@ public class Gallery extends JFrame {
 
         buttonPanel.add(pack);
         pack.setFont(new Font("Arial", Font.BOLD, 20));
+        pack.setIcon(new ImageIcon("icons/pack.png"));
 
         JFileChooser chooser = new JFileChooser();
         chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
@@ -109,7 +111,6 @@ public class Gallery extends JFrame {
             imageList = new ImageLoader(path);
         } else System.exit(0);
     }
-
     /**
      * This method is used to initialize the components and to load the images and buttons
      */
@@ -121,9 +122,10 @@ public class Gallery extends JFrame {
             //check if the folder is empty
             if (!images.isEmpty()) {
                 dialog = new JFrame();
-                JPanel panel = new JPanel(new BorderLayout());
+                dialog.setIconImage(new ImageIcon("icons/photo.png").getImage());
+                JPanel imagePanel = new JPanel(new BorderLayout());
                 JLabel imgLabel = new JLabel();
-                panel.add(imgLabel, BorderLayout.CENTER);
+                imagePanel.add(imgLabel, BorderLayout.CENTER);
                 imageList.displayImage(images, currentIndex.get(), imgLabel);
                 //previous image
                 previous.addActionListener(e1 -> {
@@ -131,6 +133,7 @@ public class Gallery extends JFrame {
                         currentIndex.decrementAndGet();
                         imageList.displayImage(images, currentIndex.get(), imgLabel);
                         dialog.pack();
+                        dialog.setTitle("Image: " + currentIndex);
                     }
                 });
                 //next image
@@ -139,6 +142,7 @@ public class Gallery extends JFrame {
                         currentIndex.incrementAndGet();
                         imageList.displayImage(images, currentIndex.get(), imgLabel);
                         dialog.pack();
+                        dialog.setTitle("Image: " + currentIndex);
                     }
                 });
                 //delete the image
@@ -177,7 +181,7 @@ public class Gallery extends JFrame {
                     });
                 });
 
-                JScrollPane scrollPane = new JScrollPane(panel);
+                JScrollPane scrollPane = new JScrollPane(imagePanel);
                 dialog.add(scrollPane);
                 dialog.pack();
                 dialog.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -212,6 +216,7 @@ public class Gallery extends JFrame {
             images = imageList.getImages();
             JFrame grid = new JFrame("Overview of images - click an image for properties");
             grid.setLayout(new GridLayout(0, 5)); // Adjust the number of columns as needed
+            grid.setIconImage(new ImageIcon("icons/photo.png").getImage());
 
             if (!images.isEmpty()) {
                 for (Map.Entry<String, Image> entry : images.entrySet()) {
@@ -236,7 +241,7 @@ public class Gallery extends JFrame {
                 JOptionPane.showMessageDialog(null, "No images found.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
-        pack.addActionListener(e -> dialog.pack());
+        pack.addActionListener(e -> dialog.pack());//pack the image if user needs
     }
 
     public static void main(String[] args) {
