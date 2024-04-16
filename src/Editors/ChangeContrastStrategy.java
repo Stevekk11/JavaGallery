@@ -55,11 +55,11 @@ public class ChangeContrastStrategy implements ImageEditStrategy {
                             changedImage = applyContrast(image, value);
                             ImageIcon icon = new ImageIcon(changedImage);
                             saveButton.addActionListener(e1 -> {
-                                //complete
+                                //save
                                 JFileChooser fileChooser = new JFileChooser();
                                 fileChooser.setDialogTitle("Specify a file to save");
 
-                                // Set a default file name (optional)
+                                // Set a default file name
                                 fileChooser.setSelectedFile(new File(entry.getKey()+"_changed.png"));
 
                                 int userSelection = fileChooser.showSaveDialog(null);

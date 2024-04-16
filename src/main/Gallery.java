@@ -2,6 +2,7 @@ package main;
 import Editors.ImageEditor;
 import Loaders.ImageLoader;
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -30,7 +31,8 @@ public class Gallery extends JFrame {
     /**
      * This constructor is used for initialising the Frame
      */
-    public Gallery() {
+    public Gallery() throws UnsupportedLookAndFeelException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         images = new HashMap<>();
         load = new JButton("Load");
         exit = new JButton("Exit");
@@ -84,7 +86,7 @@ public class Gallery extends JFrame {
         showGrid.setFont(new Font("Arial", Font.BOLD, 20));
 
         buttonPanel.add(delete);
-        delete.setBackground(Color.RED);
+        delete.setBorder(BorderFactory.createLineBorder(Color.RED,3,true));
         delete.setIcon(new ImageIcon("icons/delete.png"));
         delete.setVerticalTextPosition(SwingConstants.TOP);
         delete.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -242,11 +244,5 @@ public class Gallery extends JFrame {
             }
         });
         pack.addActionListener(e -> dialog.pack());//pack the image if user needs
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            Gallery gallery = new Gallery();
-        });
     }
 }

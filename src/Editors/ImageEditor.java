@@ -60,5 +60,9 @@ public class ImageEditor extends JFrame implements ImageEditStrategy{
             ChangeContrastStrategy strategy = new ChangeContrastStrategy();
             strategy.editImage(images, index, label);
         });
+        changeBrightness.addActionListener(e -> {
+            ChangeBrightnessStrategy strategy = new ChangeBrightnessStrategy();
+            strategy.editImage(images, index, label);
+        });
     }
 }
