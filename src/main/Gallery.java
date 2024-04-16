@@ -2,7 +2,6 @@ package main;
 import Editors.ImageEditor;
 import Loaders.ImageLoader;
 import javax.swing.*;
-import javax.swing.border.BevelBorder;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -191,6 +190,7 @@ public class Gallery extends JFrame {
                 dialog.setTitle("Image: " + currentIndex);
             } else {
                 JOptionPane.showMessageDialog(null, "No images found.", "Error", JOptionPane.ERROR_MESSAGE);
+                System.exit(1);
             }
         });
         //display the properties such as filename, size
@@ -214,7 +214,7 @@ public class Gallery extends JFrame {
         //show grid of images
         showGrid.addActionListener(e -> {
             ImageLoader imageList = new ImageLoader("images");
-            imageList.load();
+            imageList.load(); //load the images
             images = imageList.getImages();
             JFrame grid = new JFrame("Overview of images - click an image for properties");
             grid.setLayout(new GridLayout(0, 5)); // Adjust the number of columns as needed

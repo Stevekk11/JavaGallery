@@ -33,7 +33,9 @@ public class ChangeBrightnessStrategy implements ImageEditStrategy {
         slider.setMinorTickSpacing(20);
 
         labelTable.put(-100, new JLabel("-100"));
+        labelTable.put(-50, new JLabel("-50"));
         labelTable.put(0, new JLabel("0"));
+        labelTable.put(50, new JLabel("50"));
         labelTable.put(100, new JLabel("100"));
         slider.setLabelTable(labelTable);
 

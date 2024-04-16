@@ -80,7 +80,7 @@ public class ImageLoader {
         Image image = images.get(filename);
         JFrame frame = new JFrame(filename);
         if (image != null) {
-            ImageIcon icon = new ImageIcon(image.getScaledInstance(width/5, height/5, Image.SCALE_SMOOTH));
+            ImageIcon icon = new ImageIcon(image.getScaledInstance(width/3, height/3, Image.SCALE_SMOOTH));
             frame.add(new JLabel(icon));
             frame.pack();
             frame.setVisible(true);
@@ -107,6 +107,7 @@ public class ImageLoader {
 
             JFrame info = new JFrame("Image properties");
             JTextArea text = new JTextArea(properties.toString());
+            text.setFont(new Font("Monospaced", Font.PLAIN, 16));
             JButton showImageButton = new JButton("Show Image");
             showImageButton.addActionListener(e -> displayImage(filename));
 
