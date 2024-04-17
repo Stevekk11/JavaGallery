@@ -5,6 +5,8 @@ import Loaders.ImageLoader;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
@@ -193,7 +195,18 @@ public class Gallery extends JFrame {
         //edit the image
         edit.addActionListener(e1 -> {
             SwingUtilities.invokeLater(() -> {
+                next.setEnabled(false);
+                previous.setEnabled(false);
                 ImageEditor editor = new ImageEditor();
+                editor.setTitle("Image Editor - editing image: " + currentIndex);
+                editor.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent e) {
+                        next.setEnabled(true);
+                        previous.setEnabled(true);
+                        System.out.println("closed");
+                    }
+                });
                 editor.editImage(images, currentIndex.get(), imgLabel);
             });
         });

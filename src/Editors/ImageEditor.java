@@ -5,7 +5,6 @@ import java.awt.*;
 import java.util.Map;
 
 public class ImageEditor extends JFrame implements ImageEditStrategy{
-    protected JFrame frame;
     protected JPanel panel;
     protected JButton zoom;
     protected JButton showInBlackAndWhite;
@@ -15,8 +14,7 @@ public class ImageEditor extends JFrame implements ImageEditStrategy{
     protected JButton changeBrightness;
 
     public ImageEditor() {
-        frame = new JFrame("Image Editor");
-        frame.setIconImage(new ImageIcon("icons/photo.png").getImage());
+        setIconImage(new ImageIcon("icons/photo.png").getImage());
         panel = new JPanel();
         zoom = new JButton("Zoom");
         showInBlackAndWhite = new JButton("Show in Black and White");
@@ -43,12 +41,12 @@ public class ImageEditor extends JFrame implements ImageEditStrategy{
         panel.add(changeBrightness);
         changeBrightness.setFont(new Font("Arial", Font.BOLD, 20));
         changeBrightness.setIcon(new ImageIcon("icons/brightness.png"));
-        frame.add(panel);
+        add(panel);
 
-        frame.setSize(800, 500);
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
+        setSize(800, 500);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setVisible(true);
     }
     @Override
     public void editImage(Map<String, Image> images, int index, JLabel label){

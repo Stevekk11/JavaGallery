@@ -14,7 +14,7 @@ public class GrayScaleStrategy implements ImageEditStrategy {
             for (Map.Entry<String, Image> entry : images.entrySet()) {
                 if (i == index) {
                     //convert the image to gray-scale
-                    Image image = entry.getValue();
+                    Image image = entry.getValue().getScaledInstance(entry.getValue().getWidth(null) / 4, entry.getValue().getHeight(null) / 4, Image.SCALE_SMOOTH);
                     BufferedImage bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_BYTE_GRAY);
                     Graphics graphics = bufferedImage.getGraphics();
                     graphics.drawImage(image, 0, 0, null);
