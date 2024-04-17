@@ -3,6 +3,8 @@ package Loaders;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -122,6 +124,52 @@ public class ImageLoader {
             JOptionPane.showMessageDialog(null, "Error reading image properties", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
+    public void showGrid(HashMap<String, Image> images, ImageLoader imageList) {
+    imageList.load(); // Load the images
+    images = imageList.getImages();
+    JFrame grid = new JFrame("Overview of Images - Click an Image for Properties");
+    grid.setLayout(new GridLayout(3, 0));
+    grid.setIconImage(new ImageIcon("icons/photo.png").getImage());
+
+    if (!images.isEmpty()) {
+        for (Map.Entry<String, Image> entry : images.entrySet()) {
+            // Determine the resize dimensions while maintaining the aspect ratio
+            int maxWidth = 400; // Maximum width for the images
+            int maxHeight = 400; // Maximum height for the images
+            double aspectRatio = (double) entry.getValue().getWidth(null) / entry.getValue().getHeight(null);
+            int width, height;
+
+            // Resize based on the longest dimension
+            if (entry.getValue().getWidth(null) > entry.getValue().getHeight(null)) {
+                width = maxWidth;
+                height = (int) (maxWidth / aspectRatio);
+            } else {
+                width = (int) (maxHeight * aspectRatio);
+                height = maxHeight;
+            }
+
+            ImageIcon imageIcon = new ImageIcon(entry.getValue().getScaledInstance(width, height, Image.SCALE_SMOOTH));
+            JLabel imgLabel = new JLabel(imageIcon);
+            imgLabel.setHorizontalAlignment(SwingConstants.CENTER);
+            imgLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+            imgLabel.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    imageList.displayImageProperties(entry.getKey());
+                }
+            });
+            grid.add(imgLabel);
+        }
+
+        grid.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        grid.pack();
+        grid.setLocationRelativeTo(null);
+        grid.setVisible(true);
+    } else {
+        JOptionPane.showMessageDialog(null, "No images found.", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+}
+
 
     public HashMap<String, Image> getImages() {
         return images;

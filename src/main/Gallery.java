@@ -1,10 +1,10 @@
 package main;
+
 import Editors.ImageEditor;
 import Loaders.ImageLoader;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
@@ -46,6 +46,7 @@ public class Gallery extends JFrame {
         init();
         showImages();
     }
+
     /**
      * Helper method
      */
@@ -85,7 +86,7 @@ public class Gallery extends JFrame {
         showGrid.setFont(new Font("Arial", Font.BOLD, 20));
 
         buttonPanel.add(delete);
-        delete.setBorder(BorderFactory.createLineBorder(Color.RED,3,true));
+        delete.setBorder(BorderFactory.createLineBorder(Color.RED, 3, true));
         delete.setIcon(new ImageIcon("icons/delete.png"));
         delete.setVerticalTextPosition(SwingConstants.TOP);
         delete.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -112,76 +113,24 @@ public class Gallery extends JFrame {
             imageList = new ImageLoader(path);
         } else System.exit(0);
     }
+
     /**
      * This method is used to initialize the components and to load the images and buttons
      */
     private void showImages() {
+        JLabel imgLabel = new JLabel();
+        JPanel imagePanel = new JPanel(new BorderLayout());
+
         load.addActionListener(e -> {
-            //load the images form folder
+            //load the images from folder
             imageList.load();
             images = imageList.getImages();
             //check if the folder is empty
             if (!images.isEmpty()) {
                 dialog = new JFrame();
                 dialog.setIconImage(new ImageIcon("icons/photo.png").getImage());
-                JPanel imagePanel = new JPanel(new BorderLayout());
-                JLabel imgLabel = new JLabel();
                 imagePanel.add(imgLabel, BorderLayout.CENTER);
                 imageList.displayImage(images, currentIndex.get(), imgLabel);
-                //previous image
-                previous.addActionListener(e1 -> {
-                    if (currentIndex.get() > 0) {
-                        currentIndex.decrementAndGet();
-                        imageList.displayImage(images, currentIndex.get(), imgLabel);
-                        dialog.pack();
-                        dialog.setTitle("Image: " + currentIndex);
-                    }
-                });
-                //next image
-                next.addActionListener(e1 -> {
-                    if (currentIndex.get() < images.size() - 1) {
-                        currentIndex.incrementAndGet();
-                        imageList.displayImage(images, currentIndex.get(), imgLabel);
-                        dialog.pack();
-                        dialog.setTitle("Image: " + currentIndex);
-                    }
-                });
-                //delete the image
-                delete.addActionListener(e1 -> {
-                    if (currentIndex.get() >= 0 && currentIndex.get() < images.size()) {
-                        String filenameToDelete = "";
-                        int i = 0;
-                        for (Map.Entry<String, Image> entry : images.entrySet()) {
-                            if (i == currentIndex.get()) {
-                                filenameToDelete = entry.getKey();
-                                break;
-                            }
-                            i++;
-                        }
-                        if (!filenameToDelete.isEmpty()) {
-                            images.remove(filenameToDelete);
-                            File fileToDelete = new File("images/" + filenameToDelete);
-                            if (fileToDelete.exists()) {
-                                if (fileToDelete.delete()) {
-                                    JOptionPane.showMessageDialog(null, "Image deleted successfully");
-                                } else {
-                                    JOptionPane.showMessageDialog(null, "Image could not be deleted");
-                                }
-                            } else JOptionPane.showMessageDialog(null, "File does not exist");
-                            currentIndex.set(0);
-                            imageList.displayImage(images, currentIndex.get(), imgLabel);
-                            dialog.pack();
-                        }
-                    }
-                });
-                //edit the image
-                edit.addActionListener(e1 -> {
-                    SwingUtilities.invokeLater(() -> {
-                        ImageEditor editor = new ImageEditor();
-                        editor.editImage(images, currentIndex.get(), imgLabel);
-                    });
-                });
-
                 JScrollPane scrollPane = new JScrollPane(imagePanel);
                 dialog.add(scrollPane);
                 dialog.pack();
@@ -193,6 +142,62 @@ public class Gallery extends JFrame {
                 System.exit(1);
             }
         });
+
+        //previous image
+        previous.addActionListener(e1 -> {
+            if (currentIndex.get() > 0) {
+                currentIndex.decrementAndGet();
+                imageList.displayImage(images, currentIndex.get(), imgLabel);
+                dialog.pack();
+                dialog.setTitle("Image: " + currentIndex);
+            }
+        });
+        //next image
+        next.addActionListener(e1 -> {
+            if (currentIndex.get() < images.size() - 1) {
+                currentIndex.incrementAndGet();
+                imageList.displayImage(images, currentIndex.get(), imgLabel);
+                dialog.pack();
+                dialog.setTitle("Image: " + currentIndex);
+            }
+        });
+        //delete the image
+        delete.addActionListener(e1 -> {
+            if (currentIndex.get() >= 0 && currentIndex.get() < images.size()) {
+                String filenameToDelete = "";
+                int i = 0;
+                for (Map.Entry<String, Image> entry : images.entrySet()) {
+                    if (i == currentIndex.get()) {
+                        filenameToDelete = entry.getKey();
+                        break;
+                    }
+                    i++;
+                }
+                if (!filenameToDelete.isEmpty()) {
+                    images.remove(filenameToDelete);
+                    File fileToDelete = new File("images/" + filenameToDelete);
+                    if (fileToDelete.exists()) {
+                        if (fileToDelete.delete()) {
+                            JOptionPane.showMessageDialog(null, "Image deleted successfully");
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Image could not be deleted");
+                        }
+                    } else JOptionPane.showMessageDialog(null, "File does not exist");
+                    currentIndex.set(0);
+                    imageList.displayImage(images, currentIndex.get(), imgLabel);
+                    dialog.pack();
+                }
+            }
+        });
+
+        //edit the image
+        edit.addActionListener(e1 -> {
+            SwingUtilities.invokeLater(() -> {
+                ImageEditor editor = new ImageEditor();
+                editor.editImage(images, currentIndex.get(), imgLabel);
+            });
+        });
+
         //display the properties such as filename, size
         properties.addActionListener(e -> {
             String filename;
@@ -212,37 +217,7 @@ public class Gallery extends JFrame {
         //Exit
         exit.addActionListener(e -> System.exit(0));
         //show grid of images
-        showGrid.addActionListener(e -> {
-            ImageLoader imageList = new ImageLoader("images");
-            imageList.load(); //load the images
-            images = imageList.getImages();
-            JFrame grid = new JFrame("Overview of images - click an image for properties");
-            grid.setLayout(new GridLayout(0, 5)); // Adjust the number of columns as needed
-            grid.setIconImage(new ImageIcon("icons/photo.png").getImage());
-
-            if (!images.isEmpty()) {
-                for (Map.Entry<String, Image> entry : images.entrySet()) {
-                    // Resize the image to fit within the JLabel
-                    ImageIcon imageIcon = new ImageIcon(entry.getValue().getScaledInstance(entry.getValue().getWidth(null) / 10, entry.getValue().getHeight(null) / 10, Image.SCALE_SMOOTH)); // Adjust the width and height as needed
-                    JLabel imgLabel = new JLabel(imageIcon);
-                    imgLabel.setHorizontalAlignment(SwingConstants.CENTER); // Center the image within the label
-                    imgLabel.addMouseListener(new MouseAdapter() {
-                        @Override
-                        public void mouseClicked(MouseEvent e) {
-                            imageList.displayImageProperties(entry.getKey());
-                        }
-                    });
-                    grid.add(imgLabel);
-                }
-
-                grid.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                grid.pack(); // Adjust the size of the JFrame to fit the components
-                grid.setLocationRelativeTo(null); // Center the JFrame on the screen
-                grid.setVisible(true);
-            } else {
-                JOptionPane.showMessageDialog(null, "No images found.", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        });
+        showGrid.addActionListener(e -> imageList.showGrid(images, imageList));
         pack.addActionListener(e -> dialog.pack());//pack the image if user needs
     }
 }
