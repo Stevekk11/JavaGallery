@@ -9,6 +9,7 @@ public class Main {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             try {
+                linesOfCode();
                 Gallery gallery = new Gallery();
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, e);
