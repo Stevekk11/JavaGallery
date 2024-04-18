@@ -12,6 +12,7 @@ public class ImageEditor extends JFrame implements ImageEditStrategy{
     protected JButton changeSize;
     protected JButton changeContrast;
     protected JButton changeBrightness;
+    protected JButton changeCompression;
 
     public ImageEditor() {
         setIconImage(new ImageIcon("icons/photo.png").getImage());
@@ -22,7 +23,8 @@ public class ImageEditor extends JFrame implements ImageEditStrategy{
         changeSize = new JButton("Change Size");
         changeContrast = new JButton("Change Contrast");
         changeBrightness = new JButton("Change Brightness");
-        panel.setLayout(new GridLayout(3, 2));
+        changeCompression = new JButton("<html>Change compression -<br>For JPEG images only!</html>");
+        panel.setLayout(new GridLayout(4, 2));
         panel.add(zoom);
         zoom.setFont(new Font("Arial", Font.BOLD, 20));
         zoom.setIcon(new ImageIcon("icons/zoom.png"));
@@ -41,6 +43,9 @@ public class ImageEditor extends JFrame implements ImageEditStrategy{
         panel.add(changeBrightness);
         changeBrightness.setFont(new Font("Arial", Font.BOLD, 20));
         changeBrightness.setIcon(new ImageIcon("icons/brightness.png"));
+        changeCompression.setFont(new Font("Arial", Font.BOLD, 20));
+        changeCompression.setIcon(new ImageIcon("icons/compression.png"));
+        panel.add(changeCompression);
         add(panel);
 
         setSize(800, 500);
@@ -75,6 +80,10 @@ public class ImageEditor extends JFrame implements ImageEditStrategy{
                 }
                 i++;
             }
+        });
+        changeCompression.addActionListener(e -> {
+            ChangeCompressionStrategy strategy = new ChangeCompressionStrategy();
+            strategy.editImage(images, index, label);
         });
     }
 }

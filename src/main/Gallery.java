@@ -204,7 +204,6 @@ public class Gallery extends JFrame {
                     public void windowClosing(WindowEvent e) {
                         next.setEnabled(true);
                         previous.setEnabled(true);
-                        System.out.println("closed");
                     }
                 });
                 editor.editImage(images, currentIndex.get(), imgLabel);
