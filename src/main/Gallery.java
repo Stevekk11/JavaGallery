@@ -177,7 +177,7 @@ public class Gallery extends JFrame {
                 }
                 if (!filenameToDelete.isEmpty()) {
                     images.remove(filenameToDelete);
-                    File fileToDelete = new File("images/" + filenameToDelete);
+                    File fileToDelete = new File(path +"/"+filenameToDelete);
                     if (fileToDelete.exists()) {
                         if (fileToDelete.delete()) {
                             JOptionPane.showMessageDialog(null, "Image deleted successfully");

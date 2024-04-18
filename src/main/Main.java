@@ -17,7 +17,7 @@ public class Main {
     }
     /**
      *This method is used for counting the lines of code. NOT MY CREATION. See: <a href="https://github.com/AlDanial/cloc">Github</a> for more info.
-     * @throws IOException
+     * @throws IOException exception
      */
     public static void linesOfCode() throws IOException {
         String command = "cloc.exe";

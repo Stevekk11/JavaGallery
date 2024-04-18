@@ -66,5 +66,15 @@ public class ImageEditor extends JFrame implements ImageEditStrategy{
             GrayScaleStrategy strategy = new GrayScaleStrategy();
             strategy.editImage(images, index, label);
         });
+        showInColor.addActionListener(e -> {
+            int i = 0;
+            for (Map.Entry<String, Image> entry : images.entrySet()) {
+                if (i == index){
+                    label.setIcon(new ImageIcon(entry.getValue().getScaledInstance(entry.getValue().getWidth(null)/4, entry.getValue().getHeight(null)/4, Image.SCALE_SMOOTH)));
+                    break;
+                }
+                i++;
+            }
+        });
     }
 }
