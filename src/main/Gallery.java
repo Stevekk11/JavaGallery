@@ -28,6 +28,7 @@ public class Gallery extends JFrame {
     protected JFrame dialog;
     protected String path;
     protected ImageLoader imageList;
+    private boolean isEditorOpen = false;
 
     /**
      * This constructor is used for initialising the Frame
@@ -108,6 +109,7 @@ public class Gallery extends JFrame {
 
         JFileChooser chooser = new JFileChooser();
         chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        chooser.setSelectedFile(new File("C:/Users/Monika/OneDrive - SPŠE Ječná 30, Praha 2/IdeaProjects/GalleryFinalProject/images"));//for test
         int result = chooser.showOpenDialog(null);
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedDirectory = chooser.getSelectedFile();
@@ -177,7 +179,7 @@ public class Gallery extends JFrame {
                 }
                 if (!filenameToDelete.isEmpty()) {
                     images.remove(filenameToDelete);
-                    File fileToDelete = new File(path +"/"+filenameToDelete);
+                    File fileToDelete = new File(path + "/" + filenameToDelete);
                     if (fileToDelete.exists()) {
                         if (fileToDelete.delete()) {
                             JOptionPane.showMessageDialog(null, "Image deleted successfully");
@@ -194,20 +196,28 @@ public class Gallery extends JFrame {
 
         //edit the image
         edit.addActionListener(e1 -> {
-            SwingUtilities.invokeLater(() -> {
-                next.setEnabled(false);
-                previous.setEnabled(false);
-                ImageEditor editor = new ImageEditor();
-                editor.setTitle("Image Editor - editing image: " + currentIndex);
-                editor.addWindowListener(new WindowAdapter() {
-                    @Override
-                    public void windowClosing(WindowEvent e) {
-                        next.setEnabled(true);
-                        previous.setEnabled(true);
-                    }
+            if (!images.isEmpty() && !isEditorOpen) {
+                SwingUtilities.invokeLater(() -> {
+                    next.setEnabled(false);
+                    previous.setEnabled(false);
+                    isEditorOpen = true; // Set the flag to true as the editor is being opened
+                    ImageEditor editor = new ImageEditor();
+                    editor.setTitle("Image Editor - editing image: " + currentIndex);
+                    editor.addWindowListener(new WindowAdapter() {
+                        @Override
+                        public void windowClosing(WindowEvent e) {
+                            next.setEnabled(true);
+                            previous.setEnabled(true);
+                            isEditorOpen = false; // Reset the flag as the editor is closed
+                        }
+                    });
+                    editor.editImage(images, currentIndex.get(), imgLabel);
                 });
-                editor.editImage(images, currentIndex.get(), imgLabel);
-            });
+            } else if (images.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "No images to edit.", "Error", JOptionPane.ERROR_MESSAGE);
+            } else if (isEditorOpen) {
+                JOptionPane.showMessageDialog(null, "Image editor is already open.", "Warning", JOptionPane.WARNING_MESSAGE);
+            }
         });
 
         //display the properties such as filename, size

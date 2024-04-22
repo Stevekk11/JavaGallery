@@ -1,7 +1,4 @@
 package main;
-
-import Editors.ImageEditor;
-
 import javax.swing.*;
 import java.io.*;
 

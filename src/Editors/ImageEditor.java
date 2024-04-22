@@ -85,5 +85,14 @@ public class ImageEditor extends JFrame implements ImageEditStrategy{
             ChangeCompressionStrategy strategy = new ChangeCompressionStrategy();
             strategy.editImage(images, index, label);
         });
+        changeSize.addActionListener(e -> {
+            ChangeSizeStrategy strategy = new ChangeSizeStrategy();
+            strategy.editImage(images, index, label);
+        });
+    }
+
+    public static void main(String[] args) {
+        ImageEditor editor = new ImageEditor();
+        editor.editImage(null,0,null);
     }
 }
