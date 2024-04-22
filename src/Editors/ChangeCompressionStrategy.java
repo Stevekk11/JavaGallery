@@ -21,7 +21,7 @@ public class ChangeCompressionStrategy extends JFrame implements ImageEditStrate
     @Override
     public void editImage(Map<String, Image> images, int index, JLabel label) {
         setTitle("Change Compression - for JPEG images only");
-        setSize(400, 200);
+        setSize(450, 200);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         JPanel panel = new JPanel();
@@ -40,7 +40,7 @@ public class ChangeCompressionStrategy extends JFrame implements ImageEditStrate
 
         slider.addChangeListener(e -> {
             currentVal.setText("Current value: " + slider.getValue() + "%");
-            if (!slider.getValueIsAdjusting() && index < images.size() && index >= 0) {
+            if (!slider.getValueIsAdjusting() && index < images.size() && index >= 0 && slider.getValue()>0) {
                 int i = 0;
                 for (Map.Entry<String, Image> entry : images.entrySet()) {
                     if (i == index) {

@@ -14,19 +14,32 @@ public class ChangeSizeStrategy implements ImageEditStrategy {
     @Override
     public void editImage(Map<String, Image> images, int index, JLabel label) {
         JFrame editFrame = new JFrame("Change Size of Image");
-        JPanel panel = new JPanel(new GridLayout(2, 2));
+        editFrame.setLayout(new GridLayout(2,1));
+        JLabel l = new JLabel();
+        l.setHorizontalAlignment(JLabel.CENTER);
+        l.setVerticalAlignment(JLabel.CENTER);
+        l.setIcon(new ImageIcon("icons/linked.png"));
+        JPanel panel = new JPanel(new GridLayout(1, 2));
+        JPanel icons = new JPanel(new GridLayout(1, 3));
         JTextField widthField = new JTextField();
         JTextField heightField = new JTextField();
         JTextField widthLabel = new JTextField("Width:");
         JTextField heightLabel = new JTextField("Height:");
-        panel.add(widthLabel);
-        panel.add(heightLabel);
+        icons.add(widthLabel);
+        icons.add(l);
+        icons.add(heightLabel);
         widthLabel.setEditable(false);
         heightLabel.setEditable(false);
+        widthLabel.setBorder(null);
+        heightLabel.setBorder(null);
+        widthLabel.setHorizontalAlignment(JTextField.CENTER);
+        heightLabel.setHorizontalAlignment(JTextField.CENTER);
+
         panel.add(widthField);
         panel.add(heightField);
+        editFrame.add(icons);
         editFrame.add(panel);
-        editFrame.setSize(300, 100);
+        editFrame.setSize(300, 150);
         editFrame.setVisible(true);
         editFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         editFrame.setLocationRelativeTo(null);
