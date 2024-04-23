@@ -21,11 +21,11 @@ public class ChangeCompressionStrategy extends JFrame implements ImageEditStrate
     @Override
     public void editImage(Map<String, Image> images, int index, JLabel label) {
         setTitle("Change Compression - for JPEG images only");
-        setSize(450, 200);
+        setSize(400, 200);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         JPanel panel = new JPanel();
-        JSlider slider = new JSlider(0, 100, 80);
+        JSlider slider = new JSlider(1, 100, 80);
         JButton save = new JButton("Save");
         JLabel currentVal = new JLabel("Current value: " + slider.getValue() + "%");
         slider.setMajorTickSpacing(10);
@@ -40,7 +40,7 @@ public class ChangeCompressionStrategy extends JFrame implements ImageEditStrate
 
         slider.addChangeListener(e -> {
             currentVal.setText("Current value: " + slider.getValue() + "%");
-            if (!slider.getValueIsAdjusting() && index < images.size() && index >= 0 && slider.getValue()>0) {
+            if (!slider.getValueIsAdjusting() && index < images.size() && index >= 0) {
                 int i = 0;
                 for (Map.Entry<String, Image> entry : images.entrySet()) {
                     if (i == index) {
@@ -82,7 +82,6 @@ public class ChangeCompressionStrategy extends JFrame implements ImageEditStrate
                             byte[] compressedImageBytes = baos.toByteArray();
                             ByteArrayInputStream bais = new ByteArrayInputStream(compressedImageBytes);
                             compressedImage = ImageIO.read(bais);
-
                             // Update the label icon to show the new image
                             label.setIcon(new ImageIcon(compressedImage));
                             label.repaint();

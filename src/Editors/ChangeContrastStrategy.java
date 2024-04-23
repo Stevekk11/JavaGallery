@@ -9,12 +9,20 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Hashtable;
 import java.util.Map;
-
+/**
+ * Implements the ImageEditStrategy interface to provide contrast adjustment functionality for images.
+ */
 public class ChangeContrastStrategy implements ImageEditStrategy {
 
     public ChangeContrastStrategy() {
     }
-
+    /**
+     * Edits the image by allowing the user to adjust its contrast.
+     *
+     * @param images A map containing image filenames as keys and Image objects as values.
+     * @param index  The index of the image to be edited.
+     * @param label  The JLabel component where the edited image will be displayed.
+     */
     @Override
     public void editImage(Map<String, Image> images, int index, JLabel label) {
         JFrame frame = new JFrame("Change Contrast");

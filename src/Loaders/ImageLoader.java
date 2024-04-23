@@ -1,5 +1,7 @@
 package Loaders;
 
+import main.Gallery;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -36,9 +38,11 @@ public class ImageLoader {
                         Image image = ImageIO.read(file);
                         if (image != null) {
                             images.put(file.getName(), image);
-                        } else
-                            JOptionPane.showMessageDialog(null, "Error loading image: " + file.getName(), "Error", JOptionPane.ERROR_MESSAGE);
-                        // Store the filename along with the Image object in the HashMap
+                        } else {
+                            SwingUtilities.invokeLater(() -> {
+                                JOptionPane.showMessageDialog(null, "Error loading image: " + file.getName(), "Error", JOptionPane.ERROR_MESSAGE);
+                            });
+                        }
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -127,6 +131,13 @@ public class ImageLoader {
         }
     }
 
+    /**
+     * Displays a grid layout of images from the provided HashMap and allows users to click on images
+     * to view their properties.
+     *
+     * @param images    A HashMap containing image filenames as keys and Image objects as values.
+     * @param imageList An ImageLoader object to load and retrieve images.
+     */
     public void showGrid(HashMap<String, Image> images, ImageLoader imageList) {
         imageList.load(); // Load the images
         images = imageList.getImages();
@@ -173,7 +184,7 @@ public class ImageLoader {
         }
     }
 
-
+    //getter
     public HashMap<String, Image> getImages() {
         return images;
     }

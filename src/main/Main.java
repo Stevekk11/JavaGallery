@@ -3,10 +3,16 @@ import javax.swing.*;
 import java.io.*;
 
 public class Main {
+    /**
+     * instantiate the Gallery class so open the Frame
+     * @param args cli - not used
+     */
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
+            Thread.setDefaultUncaughtExceptionHandler((t, e) -> {
+                JOptionPane.showMessageDialog(null, e, "An unhandled exception occurred in thread: "+t, JOptionPane.ERROR_MESSAGE);
+            });
             try {
-                linesOfCode();
                 Gallery gallery = new Gallery();
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, e);

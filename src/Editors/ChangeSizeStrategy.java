@@ -6,11 +6,19 @@ import java.util.Map;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-
+/**
+ * Implements the ImageEditStrategy interface to provide resizing functionality for images.
+ */
 public class ChangeSizeStrategy implements ImageEditStrategy {
 
     private boolean updatingFields = false;
-
+     /**
+     * Edits the image by allowing the user to change its size.
+     *
+     * @param images A map containing image filenames as keys and Image objects as values.
+     * @param index  The index of the image to be edited.
+     * @param label  The JLabel component where the edited image will be displayed.
+     */
     @Override
     public void editImage(Map<String, Image> images, int index, JLabel label) {
         JFrame editFrame = new JFrame("Change Size of Image");
@@ -19,12 +27,14 @@ public class ChangeSizeStrategy implements ImageEditStrategy {
         l.setHorizontalAlignment(JLabel.CENTER);
         l.setVerticalAlignment(JLabel.CENTER);
         l.setIcon(new ImageIcon("icons/linked.png"));
+
         JPanel panel = new JPanel(new GridLayout(1, 2));
         JPanel icons = new JPanel(new GridLayout(1, 3));
         JTextField widthField = new JTextField();
         JTextField heightField = new JTextField();
         JTextField widthLabel = new JTextField("Width:");
         JTextField heightLabel = new JTextField("Height:");
+
         icons.add(widthLabel);
         icons.add(l);
         icons.add(heightLabel);

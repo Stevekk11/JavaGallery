@@ -4,7 +4,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Map;
 
-public class ImageEditor extends JFrame implements ImageEditStrategy{
+/**
+ * The ImageEditor class provides a graphical user interface for editing images.
+ * It allows users to perform various image editing operations such as zooming, changing contrast,
+ * changing brightness, converting to grayscale, displaying in color, changing compression, and changing size.
+ */
+public class ImageEditor extends JFrame implements ImageEditStrategy {
     protected JPanel panel;
     protected JButton zoom;
     protected JButton showInBlackAndWhite;
@@ -14,6 +19,10 @@ public class ImageEditor extends JFrame implements ImageEditStrategy{
     protected JButton changeBrightness;
     protected JButton changeCompression;
 
+    /**
+     * Constructs an ImageEditor object.
+     * Initializes the GUI components and sets up the frame.
+     */
     public ImageEditor() {
         setIconImage(new ImageIcon("icons/photo.png").getImage());
         panel = new JPanel();
@@ -53,11 +62,19 @@ public class ImageEditor extends JFrame implements ImageEditStrategy{
         setLocationRelativeTo(null);
         setVisible(true);
     }
+
+    /**
+     * Edits the image based on the selected editing strategy.
+     *
+     * @param images A map containing image filenames as keys and Image objects as values.
+     * @param index  The index of the image to be edited.
+     * @param label  The JLabel component where the edited image will be displayed.
+     */
     @Override
-    public void editImage(Map<String, Image> images, int index, JLabel label){
+    public void editImage(Map<String, Image> images, int index, JLabel label) {
         zoom.addActionListener(e -> {
-             ZoomStrategy strategy = new ZoomStrategy();
-             strategy.editImage(images, index, label);
+            ZoomStrategy strategy = new ZoomStrategy();
+            strategy.editImage(images, index, label);
         });
         changeContrast.addActionListener(e -> {
             ChangeContrastStrategy strategy = new ChangeContrastStrategy();
@@ -74,8 +91,8 @@ public class ImageEditor extends JFrame implements ImageEditStrategy{
         showInColor.addActionListener(e -> {
             int i = 0;
             for (Map.Entry<String, Image> entry : images.entrySet()) {
-                if (i == index){
-                    label.setIcon(new ImageIcon(entry.getValue().getScaledInstance(entry.getValue().getWidth(null)/4, entry.getValue().getHeight(null)/4, Image.SCALE_SMOOTH)));
+                if (i == index) {
+                    label.setIcon(new ImageIcon(entry.getValue().getScaledInstance(entry.getValue().getWidth(null) / 4, entry.getValue().getHeight(null) / 4, Image.SCALE_SMOOTH)));
                     break;
                 }
                 i++;
@@ -93,6 +110,6 @@ public class ImageEditor extends JFrame implements ImageEditStrategy{
 
     public static void main(String[] args) {
         ImageEditor editor = new ImageEditor();
-        editor.editImage(null,0,null);
+        editor.editImage(null, 0, null);
     }
 }

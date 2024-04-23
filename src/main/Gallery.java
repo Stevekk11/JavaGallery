@@ -12,7 +12,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
-//all the needed components
+/**
+ * The Gallery class represents an image gallery application.
+ * It allows users to load, view, edit, delete, and navigate through images.
+ */
 public class Gallery extends JFrame {
     protected HashMap<String, Image> images;
     protected JButton load;
@@ -31,7 +34,13 @@ public class Gallery extends JFrame {
     private boolean isEditorOpen = false;
 
     /**
-     * This constructor is used for initialising the Frame
+     * Constructs a new Gallery object.
+     * Initializes the frame and sets up the UI components.
+     *
+     * @throws UnsupportedLookAndFeelException If the system look and feel is not supported.
+     * @throws ClassNotFoundException          If the specified class for look and feel is not found.
+     * @throws InstantiationException          If the specified class for look and feel cannot be instantiated.
+     * @throws IllegalAccessException          If the specified class for look and feel cannot be accessed.
      */
     public Gallery() throws UnsupportedLookAndFeelException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -106,7 +115,7 @@ public class Gallery extends JFrame {
         buttonPanel.add(pack);
         pack.setFont(new Font("Arial", Font.BOLD, 20));
         pack.setIcon(new ImageIcon("icons/pack.png"));
-
+        //directory with images chooser
         JFileChooser chooser = new JFileChooser();
         chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         chooser.setSelectedFile(new File("C:/Users/Monika/OneDrive - SPŠE Ječná 30, Praha 2/IdeaProjects/GalleryFinalProject/images"));//for test

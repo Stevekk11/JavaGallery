@@ -4,9 +4,17 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Map;
-
+/**
+ * Implements the ImageEditStrategy interface to provide grayscale conversion for images.
+ */
 public class GrayScaleStrategy implements ImageEditStrategy {
-
+    /**
+     * Converts the specified image to grayscale and updates the label with the new image.
+     *
+     * @param images A map containing image filenames as keys and Image objects as values.
+     * @param index  The index of the image to be edited.
+     * @param label  The JLabel component where the edited image will be displayed.
+     */
     @Override
     public void editImage(Map<String, Image> images, int index, JLabel label) {
         if (index < images.size()) {
