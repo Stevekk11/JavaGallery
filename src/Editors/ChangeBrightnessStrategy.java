@@ -10,6 +10,9 @@ import java.util.Hashtable;
 import java.util.Map;
 import javax.imageio.ImageIO;
 
+/**
+ * This class is used to change the brightness of the image
+ */
 public class ChangeBrightnessStrategy implements ImageEditStrategy {
 
     private JFileChooser fileChooser = new JFileChooser();
@@ -19,6 +22,13 @@ public class ChangeBrightnessStrategy implements ImageEditStrategy {
         // Set up the file chooser dialog once
         fileChooser.setDialogTitle("Specify a file to save");
     }
+
+    /**
+     * This method edits the image using Graphics2D
+     * @param images a HashMap of images
+     * @param index the current image
+     * @param label the image label
+     */
     @Override
     public void editImage(Map<String, Image> images, int index, JLabel label) {
         JFrame frame = new JFrame("Change brightness");

@@ -15,9 +15,18 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.Map;
 
+/**
+ * This class is used to change the compression of the image
+ */
 public class ChangeCompressionStrategy extends JFrame implements ImageEditStrategy {
     private BufferedImage compressedImage;
 
+    /**
+     *
+     * @param images a HashMap of images
+     * @param index the current image
+     * @param label the image label
+     */
     @Override
     public void editImage(Map<String, Image> images, int index, JLabel label) {
         setTitle("Change Compression - for JPEG images only");
