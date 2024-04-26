@@ -1,5 +1,7 @@
 package Editors;
 
+import Loaders.DirectoryChooser;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -15,19 +17,15 @@ import javax.imageio.ImageIO;
  */
 public class ChangeBrightnessStrategy implements ImageEditStrategy {
 
-    private JFileChooser fileChooser = new JFileChooser();
+    private DirectoryChooser fileChooser;
     private BufferedImage changedImg;
-
-    public ChangeBrightnessStrategy() {
-        // Set up the file chooser dialog once
-        fileChooser.setDialogTitle("Specify a file to save");
-    }
 
     /**
      * This method edits the image using Graphics2D
+     *
      * @param images a HashMap of images
-     * @param index the current image
-     * @param label the image label
+     * @param index  the current image
+     * @param label  the image label
      */
     @Override
     public void editImage(Map<String, Image> images, int index, JLabel label) {
@@ -59,20 +57,14 @@ public class ChangeBrightnessStrategy implements ImageEditStrategy {
 
         // Add the ActionListener to the saveButton here
         saveButton.addActionListener(e -> {
-            if (changedImg != null) { // Ensure there is an image to save
-                fileChooser.setSelectedFile(new File("changed_image.png")); // Default file name
-                int userSelection = fileChooser.showSaveDialog(frame);
-
-                if (userSelection == JFileChooser.APPROVE_OPTION) {
-                    File fileToSave = fileChooser.getSelectedFile();
-                    try {
-                        ImageIO.write(changedImg, "png", fileToSave);
-                        JOptionPane.showMessageDialog(frame, "Image saved successfully!");
-                    } catch (IOException ex) {
-                        ex.printStackTrace();
-                        JOptionPane.showMessageDialog(frame, "Error saving image: " + ex.getMessage());
-                    }
-                }
+            fileChooser = new DirectoryChooser("Select where to save the image", true);
+            File fileToSave = fileChooser.getSelectedFile();
+            try {
+                ImageIO.write(changedImg, "png", fileToSave);
+                JOptionPane.showMessageDialog(frame, "Image saved successfully!");
+            } catch (IOException ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(frame, "Error saving image: " + ex.getMessage());
             }
         });
 

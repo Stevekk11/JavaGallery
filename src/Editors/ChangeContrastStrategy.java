@@ -1,5 +1,7 @@
 package Editors;
 
+import Loaders.DirectoryChooser;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -9,13 +11,17 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Hashtable;
 import java.util.Map;
+
 /**
  * Implements the ImageEditStrategy interface to provide contrast adjustment functionality for images.
  */
 public class ChangeContrastStrategy implements ImageEditStrategy {
+    private Image changedImage;
+    private DirectoryChooser directoryChooser;
 
     public ChangeContrastStrategy() {
     }
+
     /**
      * Edits the image by allowing the user to adjust its contrast.
      *
@@ -53,7 +59,6 @@ public class ChangeContrastStrategy implements ImageEditStrategy {
             int value = slider.getValue();
             valueLabel.setText("Current Value: " + value);
             Image image;
-            Image changedImage;
             if (!slider.getValueIsAdjusting()) {
                 if (index < images.size() && index >= 0) {
                     int i = 0;
@@ -62,28 +67,7 @@ public class ChangeContrastStrategy implements ImageEditStrategy {
                             image = entry.getValue().getScaledInstance(entry.getValue().getWidth(null) / 4, entry.getValue().getHeight(null) / 4, Image.SCALE_SMOOTH);
                             changedImage = applyContrast(image, value);
                             ImageIcon icon = new ImageIcon(changedImage);
-                            saveButton.addActionListener(e1 -> {
-                                //save
-                                JFileChooser fileChooser = new JFileChooser();
-                                fileChooser.setDialogTitle("Specify a file to save");
 
-                                // Set a default file name
-                                fileChooser.setSelectedFile(new File(entry.getKey()+"_changed.png"));
-
-                                int userSelection = fileChooser.showSaveDialog(null);
-
-                                if (userSelection == JFileChooser.APPROVE_OPTION) {
-                                    File fileToSave = fileChooser.getSelectedFile();
-                                    try {
-                                        // Write the changedImage to the selected file as a PNG image
-                                        ImageIO.write((RenderedImage) changedImage, "png", fileToSave);
-                                        JOptionPane.showMessageDialog(null, "Image saved successfully!");
-                                    } catch (IOException ex) {
-                                        ex.printStackTrace();
-                                        JOptionPane.showMessageDialog(null, "Error saving image: " + ex.getMessage());
-                                    }
-                                }
-                            });
                             label.setIcon(icon);
                             label.repaint();//update
                             break;// Exit the loop after applying contrast to the selected image
@@ -91,6 +75,18 @@ public class ChangeContrastStrategy implements ImageEditStrategy {
                         i++;
                     }
                 }
+            }
+        });
+        saveButton.addActionListener(e1 -> {
+            //save
+            directoryChooser = new DirectoryChooser("Select where to save the image", true);
+            File fileToSave = directoryChooser.getSelectedFile();
+            try {
+                // Write the changedImage to the selected file as a PNG image
+                ImageIO.write((RenderedImage) changedImage, "png", fileToSave);
+                JOptionPane.showMessageDialog(null, "Image saved successfully!");
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(null, "Error saving image: " + ex.getMessage());
             }
         });
     }
