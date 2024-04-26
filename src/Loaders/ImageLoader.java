@@ -1,7 +1,5 @@
 package Loaders;
 
-import main.Gallery;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -9,8 +7,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class ImageLoader {
     private HashMap<String, Image> images;
@@ -26,30 +23,35 @@ public class ImageLoader {
      * This method is used to load the image directory
      */
     public void load() {
-        File dir = new File(path);
-        if (!dir.exists()) {
-            throw new RuntimeException("Directory does not exist");
-        }
-        File[] files = dir.listFiles();
-        if (files != null) {
-            for (File file : files) {
-                if (file.isFile()) {
-                    try {
-                        Image image = ImageIO.read(file);
-                        if (image != null) {
-                            images.put(file.getName(), image);
-                        } else {
-                            SwingUtilities.invokeLater(() -> {
-                                JOptionPane.showMessageDialog(null, "Error loading image: " + file.getName(), "Error", JOptionPane.ERROR_MESSAGE);
-                            });
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
+    File dir = new File(path);
+    if (!dir.exists()) {
+        throw new RuntimeException("Directory does not exist");
+    }
+
+    ArrayList<String> fails = new ArrayList<>();
+    File[] files = dir.listFiles();
+
+    if (files != null) {
+        for (File file : files) {
+            if (file.isFile()) {
+                try {
+                    Image image = ImageIO.read(file);
+                    if (image != null) {
+                        images.put(file.getName(), image);
+                    } else {
+                        fails.add(file.getName());
                     }
+                } catch (IOException e) {
+                    fails.add(file.getName());
+                    e.printStackTrace();
                 }
             }
         }
     }
+    if (!fails.isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Error loading image(s): " + String.join("\n", fails), "Error", JOptionPane.ERROR_MESSAGE);
+    }
+}
 
     /**
      * This method is used to display the image
@@ -122,6 +124,7 @@ public class ImageLoader {
             info.add(showImageButton, BorderLayout.SOUTH);
             info.add(text, BorderLayout.CENTER);
             info.setSize(300, 150);
+            info.setFont(new Font("Arial", Font.PLAIN, 14));
             info.setLocationRelativeTo(null);
             info.setVisible(true);
             text.setEditable(false);
@@ -183,7 +186,6 @@ public class ImageLoader {
             JOptionPane.showMessageDialog(null, "No images found.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-
     //getter
     public HashMap<String, Image> getImages() {
         return images;

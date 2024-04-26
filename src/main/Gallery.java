@@ -1,6 +1,7 @@
 package main;
 
 import Editors.ImageEditor;
+import Loaders.DirectoryChooser;
 import Loaders.ImageLoader;
 
 import javax.swing.*;
@@ -116,15 +117,9 @@ public class Gallery extends JFrame {
         pack.setFont(new Font("Arial", Font.BOLD, 20));
         pack.setIcon(new ImageIcon("icons/pack.png"));
         //directory with images chooser
-        JFileChooser chooser = new JFileChooser();
-        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        chooser.setSelectedFile(new File("C:/Users/Monika/OneDrive - SPŠE Ječná 30, Praha 2/IdeaProjects/GalleryFinalProject/images"));//for test
-        int result = chooser.showOpenDialog(null);
-        if (result == JFileChooser.APPROVE_OPTION) {
-            File selectedDirectory = chooser.getSelectedFile();
-            path = selectedDirectory.getAbsolutePath();
-            imageList = new ImageLoader(path);
-        } else System.exit(0);
+        DirectoryChooser directoryChooser = new DirectoryChooser("Choose a folder with images");
+        path = directoryChooser.chooseDirectory();
+        imageList = new ImageLoader(path);
     }
 
     /**

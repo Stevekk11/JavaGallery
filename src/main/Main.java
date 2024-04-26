@@ -15,6 +15,7 @@ public class Main {
             });
             try {
                 linesOfCode();
+                //do not select the libraries folder!!
                 Gallery gallery = new Gallery();
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, e);

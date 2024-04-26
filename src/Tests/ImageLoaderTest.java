@@ -5,7 +5,6 @@ import Loaders.ImageLoader;
 import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
