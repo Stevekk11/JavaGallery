@@ -13,6 +13,8 @@ public class DirectoryChooser extends JFileChooser {
         int result = showOpenDialog(this);
         if (result == JFileChooser.APPROVE_OPTION) {
             return getSelectedFile().getAbsolutePath();
+        } else if (result == JFileChooser.CANCEL_OPTION) {
+            chooseDirectory();
         }
         return null;
     }

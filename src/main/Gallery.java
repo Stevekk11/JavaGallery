@@ -33,6 +33,7 @@ public class Gallery extends JFrame {
     protected String path;
     protected ImageLoader imageList;
     private boolean isEditorOpen = false;
+    private DirectoryChooser chooser;
 
     /**
      * Constructs a new Gallery object.
@@ -55,7 +56,7 @@ public class Gallery extends JFrame {
         edit = new JButton("Edit");
         properties = new JButton("Properties");
         currentIndex = new AtomicInteger(0);
-        pack = new JButton("Pack");
+        pack = new JButton("<html>Pack or change image<br> directory if you're on the first img</html>");
         init();
         showImages();
     }
@@ -117,9 +118,8 @@ public class Gallery extends JFrame {
         pack.setFont(new Font("Arial", Font.BOLD, 20));
         pack.setIcon(new ImageIcon("icons/pack.png"));
         //directory with images chooser
-        DirectoryChooser directoryChooser = new DirectoryChooser("Choose a folder with images");
-        path = directoryChooser.chooseDirectory();
-        imageList = new ImageLoader(path);
+        chooser = new DirectoryChooser("Choose a folder with images");
+        path = chooser.chooseDirectory();
     }
 
     /**
@@ -130,6 +130,7 @@ public class Gallery extends JFrame {
         JPanel imagePanel = new JPanel(new BorderLayout());
 
         load.addActionListener(e -> {
+            imageList = new ImageLoader(path);
             //load the images from folder
             imageList.load();
             images = imageList.getImages();
@@ -147,7 +148,7 @@ public class Gallery extends JFrame {
                 dialog.setTitle("Image: " + currentIndex);
             } else {
                 JOptionPane.showMessageDialog(null, "No images found.", "Error", JOptionPane.ERROR_MESSAGE);
-                System.exit(1);
+                chooser.chooseDirectory();
             }
         });
 
@@ -244,6 +245,6 @@ public class Gallery extends JFrame {
         exit.addActionListener(e -> System.exit(0));
         //show grid of images
         showGrid.addActionListener(e -> imageList.showGrid(images, imageList));
-        pack.addActionListener(e -> dialog.pack());//pack the image if user needs
+        pack.addActionListener(e -> {if (currentIndex.get() == 0) {path = chooser.chooseDirectory(); dialog.dispose();} else dialog.pack();});
     }
 }

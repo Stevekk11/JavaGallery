@@ -107,9 +107,4 @@ public class ImageEditor extends JFrame implements ImageEditStrategy {
             strategy.editImage(images, index, label);
         });
     }
-
-    public static void main(String[] args) {
-        ImageEditor editor = new ImageEditor();
-        editor.editImage(null, 0, null);
-    }
 }

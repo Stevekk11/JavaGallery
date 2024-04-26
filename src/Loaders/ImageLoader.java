@@ -67,15 +67,15 @@ public class ImageLoader {
             for (Map.Entry<String, Image> entry : images.entrySet()) {
                 if (i == index) {
                     image = entry.getValue();
-                    width = image.getWidth(null) / 4;
-                    height = image.getHeight(null) / 4;
+                    width = image.getWidth(null);
+                    height = image.getHeight(null);
                     break;
                 }
                 i++;
             }
         }
         if (image != null) {
-            ImageIcon icon = new ImageIcon(image.getScaledInstance(width, height, Image.SCALE_SMOOTH));
+            ImageIcon icon = new ImageIcon(image.getScaledInstance(width/4, height/4, Image.SCALE_SMOOTH));
             label.setIcon(icon);
         } else label.setIcon(null);
     }
