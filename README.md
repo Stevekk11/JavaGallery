@@ -23,8 +23,13 @@ When you click show grid:
 You can *click* each image and view their **properties**. This includes size, pixels, etc...
 ### To edit an image: <br> navigate to the desired image by *next* and *previous* and click *Edit*.
 ![Image](icons/editExample.png)
-- You will have several options:
+- ## You will have several options:
 - Zoom the image.
 - Show the image in grayscale (black and white).
 - Show in color.
 - Change brightness, contrast, compression.
+- If an error occurs, a dialog will pop up. You can check the error and click **OK.**
+- You can save the changed image.
+## Examples:
+![Image](icons/example1.png) ![Image](icons/example2.png) ![Image](icons/example3.png) 
+### **When you are changing** the size of the image, it is linked with the aspect ratio of the image.
