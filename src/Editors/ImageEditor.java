@@ -18,6 +18,7 @@ public class ImageEditor extends JFrame implements ImageEditStrategy {
     protected JButton changeContrast;
     protected JButton changeBrightness;
     protected JButton changeCompression;
+    private byte click;
 
     /**
      * Constructs an ImageEditor object.
@@ -87,6 +88,9 @@ public class ImageEditor extends JFrame implements ImageEditStrategy {
         showInBlackAndWhite.addActionListener(e -> {
             GrayScaleStrategy strategy = new GrayScaleStrategy();
             strategy.editImage(images, index, label);
+            click++;
+            if (click == 2){strategy.saveImg();}
+            if (click > 2){click = 0;}
         });
         showInColor.addActionListener(e -> {
             int i = 0;

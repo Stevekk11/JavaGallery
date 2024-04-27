@@ -20,7 +20,9 @@ public class ImageLoader {
     }
 
     /**
-     * This method is used to load the image directory
+     * This method is used to load the image directory <p>
+     *     using a for loop and adds failed images to the <code>fails ArrayList</code>
+     * </p>
      */
     public void load() {
     File dir = new File(path);
@@ -67,17 +69,21 @@ public class ImageLoader {
             for (Map.Entry<String, Image> entry : images.entrySet()) {
                 if (i == index) {
                     image = entry.getValue();
-                    width = image.getWidth(null);
-                    height = image.getHeight(null);
+                    width =(image.getWidth(null));
+                    height =(image.getHeight(null));
                     break;
                 }
                 i++;
             }
         }
-        if (image != null) {
+        if (width*height /1000000 > 2 && image != null) {
             ImageIcon icon = new ImageIcon(image.getScaledInstance(width/4, height/4, Image.SCALE_SMOOTH));
             label.setIcon(icon);
-        } else label.setIcon(null);
+        } else {
+            assert image != null;
+            ImageIcon icon = new ImageIcon(image.getScaledInstance(width/2, height/2, Image.SCALE_SMOOTH));
+            label.setIcon(icon);
+        }
     }
 
     /**

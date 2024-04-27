@@ -1,5 +1,7 @@
 package Editors;
 
+import Loaders.DirectoryChooser;
+
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageWriteParam;
@@ -20,9 +22,8 @@ import java.util.Map;
  */
 public class ChangeCompressionStrategy extends JFrame implements ImageEditStrategy {
     private BufferedImage compressedImage;
-
     /**
-     *
+     * Method for changing the compression of the image
      * @param images a HashMap of images
      * @param index the current image
      * @param label the image label
@@ -37,14 +38,14 @@ public class ChangeCompressionStrategy extends JFrame implements ImageEditStrate
         JSlider slider = new JSlider(1, 100, 80);
         JButton save = new JButton("Save");
         JLabel currentVal = new JLabel("Current value: " + slider.getValue() + "%");
-        slider.setMajorTickSpacing(10);
+        slider.setMajorTickSpacing(11);
         slider.setMinorTickSpacing(1);
         slider.setPaintTicks(true);
         slider.setPaintLabels(true);
-        panel.add(slider, BorderLayout.CENTER);
         panel.add(save, BorderLayout.NORTH);
         panel.add(currentVal, BorderLayout.SOUTH);
-        add(panel, BorderLayout.CENTER);
+        add(slider, BorderLayout.NORTH);
+        add(panel, BorderLayout.SOUTH);
         setVisible(true);
 
         slider.addChangeListener(e -> {
@@ -107,17 +108,8 @@ public class ChangeCompressionStrategy extends JFrame implements ImageEditStrate
         save.addActionListener(e -> {
             if (compressedImage != null) {
                 // Open a JFileChooser to select where to save the image
-                JFileChooser fileChooser = new JFileChooser();
-                fileChooser.setDialogTitle("Specify a file to save");
-
-                int userSelection = fileChooser.showSaveDialog(this);
-
-                if (userSelection == JFileChooser.APPROVE_OPTION) {
-                    File fileToSave = fileChooser.getSelectedFile();
-                    // Ensure the file has the correct extension
-                    if (!fileToSave.getName().toLowerCase().endsWith(".jpg")) {
-                        fileToSave = new File(fileToSave + ".jpg");
-                    }
+                DirectoryChooser directoryChooser = new DirectoryChooser("Save file", true);
+                File fileToSave = directoryChooser.getSelectedFile();
 
                     try {
                         // Save the compressed image to the selected file
@@ -126,7 +118,6 @@ public class ChangeCompressionStrategy extends JFrame implements ImageEditStrate
                     } catch (IOException ex) {
                         ex.printStackTrace();
                     }
-                }
             } else {
                 JOptionPane.showMessageDialog(this, "No compressed image available.", "Error", JOptionPane.ERROR_MESSAGE);
             }
