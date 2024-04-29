@@ -6,11 +6,17 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class Main {
-
+    /**
+     * Starts the Gallery class with an instance of it.
+     * @param args not used
+     */
     public static void main(String[] args) {
         SwingUtilities.invokeLater(Main::runApplication);
     }
 
+    /**
+     * Runs the code
+     */
     private static void runApplication() {
         setGlobalExceptionHandler();
         try {
@@ -21,6 +27,9 @@ public class Main {
         }
     }
 
+    /**
+     * Sets what happens in case an uncaught exception happens.
+     */
     private static void setGlobalExceptionHandler() {
         Thread.setDefaultUncaughtExceptionHandler((t, e) ->
             JOptionPane.showMessageDialog(null, e, "An unhandled exception occurred in thread: " + t, JOptionPane.ERROR_MESSAGE)

@@ -1,6 +1,7 @@
 package Loaders;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 
 /**
@@ -19,7 +20,7 @@ public class DirectoryChooser extends JFileChooser {
     public DirectoryChooser(String title) {
         super(title);
         setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        setSelectedFile(new File(System.getProperty("user.home")));
+        setLocation(new Point(0, 0));
     }
 
     /**
@@ -36,6 +37,7 @@ public class DirectoryChooser extends JFileChooser {
         if (saving) {
             setFileSelectionMode(JFileChooser.FILES_ONLY);
             setSelectedFile(new File("changedImg.png"));
+            setLocation(new Point(0, 0));
             int result = showSaveDialog(this);
             if (result == JFileChooser.CANCEL_OPTION) {
                 setSelectedFile(null);
@@ -53,7 +55,7 @@ public class DirectoryChooser extends JFileChooser {
         if (result == JFileChooser.APPROVE_OPTION) {
             return getSelectedFile().getAbsolutePath();
         } else if (result == JFileChooser.CANCEL_OPTION) {
-            return chooseDirectory();
+            setSelectedFile(null);
         }
         return null;
     }

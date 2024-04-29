@@ -132,8 +132,10 @@ public class Gallery extends JFrame {
         load.addActionListener(e -> {
             imageList = new ImageLoader(path);
             //load the images from folder
-            imageList.load();
-            images = imageList.getImages();
+            if (path != null) {
+                imageList.load();
+                images = imageList.getImages();
+            }
             //check if the folder is empty
             if (!images.isEmpty()) {
                 dialog = new JFrame();
@@ -245,7 +247,10 @@ public class Gallery extends JFrame {
         exit.addActionListener(e -> System.exit(0));
         //show grid of images
         showGrid.addActionListener(e -> {
-            if (imageList!=null){imageList.showGrid(images, imageList);}});
-        pack.addActionListener(e -> {if (currentIndex.get() == 0) {path = chooser.chooseDirectory();if(dialog!=null){dialog.dispose();}}else dialog.pack();});
+            if (imageList != null && path != null) {imageList.showGrid(images, imageList);}});
+        //packs or chooses a directory
+        pack.addActionListener(e -> {
+            if (currentIndex.get() == 0) {path = chooser.chooseDirectory();
+                if (dialog != null) {dialog.dispose();}} else dialog.pack();});
     }
 }
