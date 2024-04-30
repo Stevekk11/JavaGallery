@@ -47,7 +47,6 @@ public class DirectoryChooser extends JFileChooser {
 
     /**
      * Shows the directory chooser dialog and allows the user to choose a directory or file.
-     *
      * @return the absolute path of the selected directory or file, or null if no selection was made
      */
     public String chooseDirectory() {

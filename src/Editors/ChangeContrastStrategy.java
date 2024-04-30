@@ -1,6 +1,7 @@
 package Editors;
 
 import Loaders.DirectoryChooser;
+import Loaders.SetImageSize;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -64,7 +65,7 @@ public class ChangeContrastStrategy implements ImageEditStrategy {
                     int i = 0;
                     for (Map.Entry<String, Image> entry : images.entrySet()) {
                         if (i == index) {
-                            image = entry.getValue().getScaledInstance(entry.getValue().getWidth(null) / 4, entry.getValue().getHeight(null) / 4, Image.SCALE_SMOOTH);
+                            image = SetImageSize.setImageSize(entry.getValue().getWidth(null),entry.getValue().getHeight(null),entry.getValue());
                             changedImage = applyContrast(image, value);
                             ImageIcon icon = new ImageIcon(changedImage);
 

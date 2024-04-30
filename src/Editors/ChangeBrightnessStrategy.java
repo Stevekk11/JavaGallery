@@ -1,6 +1,7 @@
 package Editors;
 
 import Loaders.DirectoryChooser;
+import Loaders.SetImageSize;
 
 import javax.swing.*;
 import java.awt.*;
@@ -76,7 +77,7 @@ public class ChangeBrightnessStrategy implements ImageEditStrategy {
                 int i = 0;
                 for (Map.Entry<String, Image> entry : images.entrySet()) {
                     if (i == index) {
-                        Image image = entry.getValue().getScaledInstance(entry.getValue().getWidth(null) / 4, entry.getValue().getHeight(null) / 4, Image.SCALE_SMOOTH);
+                        Image image = SetImageSize.setImageSize(entry.getValue().getWidth(null),entry.getValue().getHeight(null),entry.getValue());
                         BufferedImage bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
                         Graphics2D graphics = bufferedImage.createGraphics();
                         graphics.drawImage(image, 0, 0, null);

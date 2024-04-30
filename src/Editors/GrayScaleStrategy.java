@@ -1,6 +1,7 @@
 package Editors;
 
 import Loaders.DirectoryChooser;
+import Loaders.SetImageSize;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -30,7 +31,7 @@ public class GrayScaleStrategy implements ImageEditStrategy {
             for (Map.Entry<String, Image> entry : images.entrySet()) {
                 if (i == index) {
                     //convert the image to gray-scale
-                    Image image = entry.getValue().getScaledInstance(entry.getValue().getWidth(null) / 4, entry.getValue().getHeight(null) / 4, Image.SCALE_SMOOTH);
+                    Image image = SetImageSize.setImageSize(entry.getValue().getWidth(null),entry.getValue().getHeight(null),entry.getValue());
                     bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_BYTE_GRAY);
                     Graphics graphics = bufferedImage.getGraphics();
                     graphics.drawImage(image, 0, 0, null);

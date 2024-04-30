@@ -76,14 +76,7 @@ public class ImageLoader {
                 i++;
             }
         }
-        if (width*height /1000000 > 2 && image != null) {
-            ImageIcon icon = new ImageIcon(image.getScaledInstance(width/4, height/4, Image.SCALE_SMOOTH));
-            label.setIcon(icon);
-        } else {
-            assert image != null;
-            ImageIcon icon = new ImageIcon(image.getScaledInstance(width/2, height/2, Image.SCALE_SMOOTH));
-            label.setIcon(icon);
-        }
+        SetImageSize.setImageSize(width,height,image,label);
     }
 
     /**

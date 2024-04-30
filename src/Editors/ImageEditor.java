@@ -1,5 +1,7 @@
 package Editors;
 
+import Loaders.SetImageSize;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.Map;
@@ -96,7 +98,7 @@ public class ImageEditor extends JFrame implements ImageEditStrategy {
             int i = 0;
             for (Map.Entry<String, Image> entry : images.entrySet()) {
                 if (i == index) {
-                    label.setIcon(new ImageIcon(entry.getValue().getScaledInstance(entry.getValue().getWidth(null) / 4, entry.getValue().getHeight(null) / 4, Image.SCALE_SMOOTH)));
+                    SetImageSize.setImageSize(entry.getValue().getWidth(null),entry.getValue().getHeight(null),entry.getValue(),label);
                     break;
                 }
                 i++;

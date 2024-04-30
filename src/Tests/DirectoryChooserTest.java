@@ -1,5 +1,6 @@
-package Loaders;
+package Tests;
 
+import Loaders.DirectoryChooser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -19,5 +20,6 @@ class DirectoryChooserTest {
     @Test
     void chooseDirectory() {
         assertNotEquals(directoryChooser.getFileSelectionMode(),savingDirectoryChooser.getFileSelectionMode());
+        assertEquals("changedImg.png",savingDirectoryChooser.getSelectedFile().getName());
     }
 }
