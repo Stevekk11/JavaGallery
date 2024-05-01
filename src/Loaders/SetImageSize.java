@@ -27,6 +27,11 @@ public class SetImageSize {
             label.setIcon(icon);
         }
     }
+
+    /**
+     * Same as the first method
+     * @return the scaled Image
+     */
     public static Image setImageSize(int width, int height, Image image) {
         if (width*height /1000000 > 2 && image != null) {
             ImageIcon icon = new ImageIcon(image.getScaledInstance(width/4, height/4, Image.SCALE_SMOOTH));
