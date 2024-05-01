@@ -1,6 +1,7 @@
 package Editors;
 
 import Loaders.DirectoryChooser;
+import Loaders.SetImageSize;
 
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
@@ -56,18 +57,13 @@ public class ChangeCompressionStrategy extends JFrame implements ImageEditStrate
                     if (i == index) {
                         // Adjust the compression level of the JPEG image
                         float compressionQuality = slider.getValue() / 100f;
-
-                        // Calculate scaled dimensions
-                        int scaledWidth = (int) (entry.getValue().getWidth(null) * compressionQuality);
-                        int scaledHeight = (int) (entry.getValue().getHeight(null) * compressionQuality);
-
-                        // Scale the image dynamically
-                        Image scaledImage = entry.getValue().getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_SMOOTH);
+                        // Scale the image
+                        Image image = SetImageSize.setImageSize(entry.getValue().getWidth(null),entry.getValue().getHeight(null),entry.getValue());
 
                         // Create BufferedImage with scaled dimensions
-                        BufferedImage bufferedImage = new BufferedImage(scaledWidth, scaledHeight, BufferedImage.TYPE_INT_RGB);
+                        BufferedImage bufferedImage = new BufferedImage(image.getWidth(null),image.getHeight(null),BufferedImage.TYPE_INT_RGB);
                         Graphics2D graphics = bufferedImage.createGraphics();
-                        graphics.drawImage(scaledImage, 0, 0, null);
+                        graphics.drawImage(image, 0, 0, null);
                         graphics.dispose();
 
                         try {

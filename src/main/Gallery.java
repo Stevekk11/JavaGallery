@@ -1,14 +1,11 @@
 package main;
-
-import Editors.ImageEditor;
 import Loaders.DirectoryChooser;
 import Loaders.ImageLoader;
+import main.ButtonActions.Delete;
+import main.ButtonActions.Edit;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -46,6 +43,7 @@ public class Gallery extends JFrame {
      */
     public Gallery() throws UnsupportedLookAndFeelException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        Edit.setIsEditorOpen(isEditorOpen);
         images = new HashMap<>();
         load = new JButton("Load");
         exit = new JButton("Exit");
@@ -128,6 +126,7 @@ public class Gallery extends JFrame {
     private void showImages() {
         JLabel imgLabel = new JLabel();
         JPanel imagePanel = new JPanel(new BorderLayout());
+        JScrollPane scrollPane = new JScrollPane(imagePanel);
 
         load.addActionListener(e -> {
             imageList = new ImageLoader(path);
@@ -142,7 +141,6 @@ public class Gallery extends JFrame {
                 dialog.setIconImage(new ImageIcon("icons/photo.png").getImage());
                 imagePanel.add(imgLabel, BorderLayout.CENTER);
                 imageList.displayImage(images, currentIndex.get(), imgLabel);
-                JScrollPane scrollPane = new JScrollPane(imagePanel);
                 dialog.add(scrollPane);
                 dialog.pack();
                 dialog.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -173,59 +171,10 @@ public class Gallery extends JFrame {
             }
         });
         //delete the image
-        delete.addActionListener(e1 -> {
-            if (currentIndex.get() >= 0 && currentIndex.get() < images.size()) {
-                String filenameToDelete = "";
-                int i = 0;
-                for (Map.Entry<String, Image> entry : images.entrySet()) {
-                    if (i == currentIndex.get()) {
-                        filenameToDelete = entry.getKey();
-                        break;
-                    }
-                    i++;
-                }
-                if (!filenameToDelete.isEmpty()) {
-                    images.remove(filenameToDelete);
-                    File fileToDelete = new File(path + "/" + filenameToDelete);
-                    if (fileToDelete.exists()) {
-                        if (fileToDelete.delete()) {
-                            JOptionPane.showMessageDialog(null, "Image deleted successfully");
-                        } else {
-                            JOptionPane.showMessageDialog(null, "Image could not be deleted");
-                        }
-                    } else JOptionPane.showMessageDialog(null, "File does not exist");
-                    currentIndex.set(0);
-                    imageList.displayImage(images, currentIndex.get(), imgLabel);
-                    dialog.pack();
-                }
-            }
-        });
+        delete.addActionListener(e1 -> Delete.deleteImage(currentIndex,images,imgLabel,imageList,dialog,path));
 
         //edit the image
-        edit.addActionListener(e1 -> {
-            if (!images.isEmpty() && !isEditorOpen) {
-                SwingUtilities.invokeLater(() -> {
-                    next.setEnabled(false);
-                    previous.setEnabled(false);
-                    isEditorOpen = true; // Set the flag to true as the editor is being opened
-                    ImageEditor editor = new ImageEditor();
-                    editor.setTitle("Image Editor - editing image: " + currentIndex);
-                    editor.addWindowListener(new WindowAdapter() {
-                        @Override
-                        public void windowClosing(WindowEvent e) {
-                            next.setEnabled(true);
-                            previous.setEnabled(true);
-                            isEditorOpen = false; // Reset the flag as the editor is closed
-                        }
-                    });
-                    editor.editImage(images, currentIndex.get(), imgLabel);
-                });
-            } else if (images.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "No images to edit.", "Error", JOptionPane.ERROR_MESSAGE);
-            } else if (isEditorOpen) {
-                JOptionPane.showMessageDialog(null, "Image editor is already open.", "Warning", JOptionPane.WARNING_MESSAGE);
-            }
-        });
+        edit.addActionListener(e1 -> Edit.edit(images,next,previous,currentIndex,imgLabel));
 
         //display the properties such as filename, size
         properties.addActionListener(e -> {
