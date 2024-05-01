@@ -5,6 +5,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.awt.image.ColorModel;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
@@ -103,9 +105,10 @@ public class ImageLoader {
     public void displayImageProperties(String filename) {
         try {
             File file = new File(path, filename);
-            Image image = images.get(filename);
-            width = image.getWidth(null);
-            height = image.getHeight(null);
+            BufferedImage bufferedImage = ImageIO.read(file);
+            ColorModel cm = bufferedImage.getColorModel();
+            width = bufferedImage.getWidth(null);
+            height = bufferedImage.getHeight(null);
             long fileSize = file.length();
             //Create a StringBuilder
             StringBuilder properties = new StringBuilder();
@@ -113,6 +116,7 @@ public class ImageLoader {
             properties.append("Resolution: ").append(width).append("x").append(height).append("\n");
             properties.append("File Size: ").append(fileSize / 1024).append(" kB").append("\n");
             properties.append("Megapixels: ").append((width * height) / 1000000.0).append("MP").append("\n");
+            properties.append("Color Depth: ").append(cm.getPixelSize()).append(" bits").append("\n");
 
             JFrame info = new JFrame("Image properties");
             JTextArea text = new JTextArea(properties.toString());
@@ -122,7 +126,7 @@ public class ImageLoader {
 
             info.add(showImageButton, BorderLayout.SOUTH);
             info.add(text, BorderLayout.CENTER);
-            info.setSize(300, 150);
+            info.setSize(320, 170);
             info.setFont(new Font("Arial", Font.PLAIN, 14));
             info.setLocationRelativeTo(null);
             info.setVisible(true);

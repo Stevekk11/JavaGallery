@@ -3,13 +3,11 @@ import Loaders.DirectoryChooser;
 import Loaders.ImageLoader;
 import main.ButtonActions.Delete;
 import main.ButtonActions.Edit;
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
-
 /**
  * The Gallery class represents an image gallery application.
  * It allows users to load, view, edit, delete, and navigate through images.
