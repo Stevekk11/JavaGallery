@@ -16,6 +16,14 @@ public class Edit {
     private Edit() {
     }
 
+    /**
+     * Method for editing the image
+     * @param images
+     * @param next
+     * @param previous
+     * @param currentIndex
+     * @param imgLabel
+     */
     public static void edit(HashMap<String, Image> images, JButton next, JButton previous, AtomicInteger currentIndex, JLabel imgLabel) {
         if (!images.isEmpty() && !isEditorOpen) {
             SwingUtilities.invokeLater(() -> {

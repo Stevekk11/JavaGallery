@@ -2,6 +2,7 @@ package Editors;
 
 import Loaders.DirectoryChooser;
 import Loaders.SetImageSize;
+import Logger.GalleryLogger;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -87,6 +88,7 @@ public class ChangeContrastStrategy implements ImageEditStrategy {
                 ImageIO.write((RenderedImage) changedImage, "png", fileToSave);
                 JOptionPane.showMessageDialog(null, "Image saved successfully!");
             } catch (IOException ex) {
+                GalleryLogger.logError(ex.toString());
                 JOptionPane.showMessageDialog(null, "Error saving image: " + ex.getMessage());
             }
         });

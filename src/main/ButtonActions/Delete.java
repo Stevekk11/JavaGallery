@@ -14,6 +14,15 @@ public class Delete {
     private Delete() {
     }
 
+    /**
+     * Method for deleting images
+     * @param currentIndex
+     * @param images
+     * @param imgLabel
+     * @param imageLoader
+     * @param dialog
+     * @param path
+     */
     public static void deleteImage(AtomicInteger currentIndex, HashMap<String, Image> images, JLabel imgLabel, ImageLoader imageLoader, JFrame dialog, String path){
         if (currentIndex.get() >= 0 && currentIndex.get() < images.size()) {
             String filenameToDelete = "";

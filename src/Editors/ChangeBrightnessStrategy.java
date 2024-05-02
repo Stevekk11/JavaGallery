@@ -2,6 +2,7 @@ package Editors;
 
 import Loaders.DirectoryChooser;
 import Loaders.SetImageSize;
+import Logger.GalleryLogger;
 
 import javax.swing.*;
 import java.awt.*;
@@ -64,7 +65,7 @@ public class ChangeBrightnessStrategy implements ImageEditStrategy {
                 ImageIO.write(changedImg, "png", fileToSave);
                 JOptionPane.showMessageDialog(frame, "Image saved successfully!");
             } catch (IOException ex) {
-                ex.printStackTrace();
+                GalleryLogger.logError(ex.toString());
                 JOptionPane.showMessageDialog(frame, "Error saving image: " + ex.getMessage());
             }
         });

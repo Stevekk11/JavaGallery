@@ -2,6 +2,7 @@ package Editors;
 
 import Loaders.DirectoryChooser;
 import Loaders.SetImageSize;
+import Logger.GalleryLogger;
 
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
@@ -92,7 +93,7 @@ public class ChangeCompressionStrategy extends JFrame implements ImageEditStrate
                             label.setIcon(new ImageIcon(compressedImage));
                             label.repaint();
                         } catch (IOException ex) {
-                            ex.printStackTrace();
+                            GalleryLogger.logError(ex.toString());
                         }
                         break; // Exit the loop after processing the selected image
                     }
@@ -112,7 +113,7 @@ public class ChangeCompressionStrategy extends JFrame implements ImageEditStrate
                         ImageIO.write(compressedImage, "jpg", fileToSave);
                         JOptionPane.showMessageDialog(this, "Image saved successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
                     } catch (IOException ex) {
-                        ex.printStackTrace();
+                        GalleryLogger.logError(ex.toString());
                     }
             } else {
                 JOptionPane.showMessageDialog(this, "No compressed image available.", "Error", JOptionPane.ERROR_MESSAGE);

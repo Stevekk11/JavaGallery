@@ -11,6 +11,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
+import Logger.GalleryLogger;
+
 public class ImageLoader {
     private HashMap<String, Image> images;
     private final String path;
@@ -23,39 +25,39 @@ public class ImageLoader {
 
     /**
      * This method is used to load the image directory <p>
-     *     using a for loop and adds failed images to the <code>fails ArrayList</code>
+     * using a for loop and adds failed images to the <code>fails ArrayList</code>
      * </p>
      */
     public void load() {
-    File dir = new File(path);
-    if (!dir.exists()) {
-        throw new RuntimeException("Directory does not exist");
-    }
+        File dir = new File(path);
+        if (!dir.exists()) {
+            throw new RuntimeException("Directory does not exist");
+        }
 
-    ArrayList<String> fails = new ArrayList<>();
-    File[] files = dir.listFiles();
+        ArrayList<String> fails = new ArrayList<>();
+        File[] files = dir.listFiles();
 
-    if (files != null) {
-        for (File file : files) {
-            if (file.isFile()) {
-                try {
-                    Image image = ImageIO.read(file);
-                    if (image != null) {
-                        images.put(file.getName(), image);
-                    } else {
+        if (files != null) {
+            for (File file : files) {
+                if (file.isFile()) {
+                    try {
+                        Image image = ImageIO.read(file);
+                        if (image != null) {
+                            images.put(file.getName(), image);
+                        } else {
+                            fails.add(file.getName());
+                        }
+                    } catch (IOException e) {
                         fails.add(file.getName());
+                        GalleryLogger.logError(e.toString());
                     }
-                } catch (IOException e) {
-                    fails.add(file.getName());
-                    e.printStackTrace();
                 }
             }
         }
+        if (!fails.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Error loading image(s): " + String.join("\n", fails), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
-    if (!fails.isEmpty()) {
-        JOptionPane.showMessageDialog(null, "Error loading image(s): " + String.join("\n", fails), "Error", JOptionPane.ERROR_MESSAGE);
-    }
-}
 
     /**
      * This method is used to display the image
@@ -71,14 +73,14 @@ public class ImageLoader {
             for (Map.Entry<String, Image> entry : images.entrySet()) {
                 if (i == index) {
                     image = entry.getValue();
-                    width =(image.getWidth(null));
-                    height =(image.getHeight(null));
+                    width = (image.getWidth(null));
+                    height = (image.getHeight(null));
                     break;
                 }
                 i++;
             }
         }
-        SetImageSize.setImageSize(width,height,image,label);
+        SetImageSize.setImageSize(width, height, image, label);
     }
 
     /**
@@ -132,7 +134,7 @@ public class ImageLoader {
             info.setVisible(true);
             text.setEditable(false);
         } catch (Exception e) {
-            e.printStackTrace();
+            GalleryLogger.logError(e.toString());
             JOptionPane.showMessageDialog(null, "Error reading image properties", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -189,6 +191,7 @@ public class ImageLoader {
             JOptionPane.showMessageDialog(null, "No images found.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
+
     //getter
     public HashMap<String, Image> getImages() {
         return images;

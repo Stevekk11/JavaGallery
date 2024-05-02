@@ -2,6 +2,7 @@ package Editors;
 
 import Loaders.DirectoryChooser;
 import Loaders.SetImageSize;
+import Logger.GalleryLogger;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -57,7 +58,7 @@ public class GrayScaleStrategy implements ImageEditStrategy {
             ImageIO.write(bufferedImage, "jpg", toSave);
             JOptionPane.showMessageDialog(null, "Image saved successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
         } catch (IOException ex) {
-            ex.printStackTrace();
+            GalleryLogger.logError(ex.toString());
         }
     }
 }
