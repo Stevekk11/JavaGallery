@@ -147,7 +147,7 @@ public class Gallery extends JFrame {
                 dialog.setTitle("Image: " + currentIndex);
             } else {
                 JOptionPane.showMessageDialog(null, "No images found.", "Error", JOptionPane.ERROR_MESSAGE);
-                chooser.chooseDirectory();
+                path = chooser.chooseDirectory();
             }
         });
 

@@ -18,11 +18,11 @@ public class Edit {
 
     /**
      * Method for editing the image
-     * @param images
-     * @param next
-     * @param previous
-     * @param currentIndex
-     * @param imgLabel
+     * @param images the images list
+     * @param next JButton
+     * @param previous JButton
+     * @param currentIndex index
+     * @param imgLabel JLabel
      */
     public static void edit(HashMap<String, Image> images, JButton next, JButton previous, AtomicInteger currentIndex, JLabel imgLabel) {
         if (!images.isEmpty() && !isEditorOpen) {

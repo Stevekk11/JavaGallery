@@ -20,7 +20,7 @@ public class SetImageSize {
      */
     public static void setImageSize(int width, int height, Image image, JLabel label) {
         if (width * height / 1000000 > 2 && image != null) {
-            ImageIcon icon = new ImageIcon(image.getScaledInstance(width/4,height/4, Image.SCALE_SMOOTH));
+            ImageIcon icon = new ImageIcon(image.getScaledInstance(width/5,height/5, Image.SCALE_SMOOTH));
             label.setIcon(icon);
         } else {
             assert image != null;
@@ -36,7 +36,7 @@ public class SetImageSize {
      */
     public static Image setImageSize(int width, int height, Image image) {
         if (width * height / 1000000 > 2 && image != null) {
-            ImageIcon icon = new ImageIcon(image.getScaledInstance(width/4,height/4, Image.SCALE_SMOOTH));
+            ImageIcon icon = new ImageIcon(image.getScaledInstance(width/5,height/5, Image.SCALE_SMOOTH));
             return icon.getImage();
         } else {
             assert image != null;

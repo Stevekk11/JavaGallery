@@ -1,2 +1,2 @@
-kvě 03, 2024 3:23:05 ODP. Logger.GalleryLogger logError
-SEVERE: java.lang.NullPointerException: Cannot invoke "java.awt.Image.getWidth(java.awt.image.ImageObserver)" because "retVal" is null
+kvě 03, 2024 3:28:16 ODP. Logger.GalleryLogger logError
+SEVERE: java.lang.IllegalArgumentException: output == null!

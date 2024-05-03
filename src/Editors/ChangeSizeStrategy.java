@@ -1,8 +1,14 @@
 package Editors;
 
+import Loaders.DirectoryChooser;
+import Logger.GalleryLogger;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Map;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -12,7 +18,9 @@ import javax.swing.event.DocumentListener;
 public class ChangeSizeStrategy implements ImageEditStrategy {
 
     private boolean updatingFields = false;
-     /**
+    private BufferedImage resizedImage;
+
+    /**
      * Edits the image by allowing the user to change its size.
      *
      * @param images A map containing image filenames as keys and Image objects as values.
@@ -22,14 +30,15 @@ public class ChangeSizeStrategy implements ImageEditStrategy {
     @Override
     public void editImage(Map<String, Image> images, int index, JLabel label) {
         JFrame editFrame = new JFrame("Change Size of Image");
-        editFrame.setLayout(new GridLayout(2,1));
+        JButton saveButton = new JButton("Save");
+        editFrame.setLayout(new GridLayout(2, 1));
         JLabel l = new JLabel();
         l.setHorizontalAlignment(JLabel.CENTER);
         l.setVerticalAlignment(JLabel.CENTER);
         l.setIcon(new ImageIcon("icons/linked.png"));
 
         JPanel panel = new JPanel(new GridLayout(1, 2));
-        JPanel icons = new JPanel(new GridLayout(1, 3));
+        JPanel icons = new JPanel(new GridLayout(1, 4));
         JTextField widthField = new JTextField();
         JTextField heightField = new JTextField();
         JTextField widthLabel = new JTextField("Width:");
@@ -38,6 +47,7 @@ public class ChangeSizeStrategy implements ImageEditStrategy {
         icons.add(widthLabel);
         icons.add(l);
         icons.add(heightLabel);
+        icons.add(saveButton);
         widthLabel.setEditable(false);
         heightLabel.setEditable(false);
         widthLabel.setBorder(null);
@@ -56,6 +66,7 @@ public class ChangeSizeStrategy implements ImageEditStrategy {
 
         widthField.setFont(new Font("Arial", Font.PLAIN, 20));
         heightField.setFont(new Font("Arial", Font.PLAIN, 20));
+        saveButton.setFont(new Font("Arial", Font.PLAIN, 18));
 
         final Image originalImage = images.values().stream().skip(index).findFirst().orElse(null);
         assert originalImage != null;
@@ -97,7 +108,7 @@ public class ChangeSizeStrategy implements ImageEditStrategy {
                             newWidth = (int) (newHeight * aspectRatio);
                             widthField.setText(String.valueOf(newWidth));
                         }
-                        BufferedImage resizedImage = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_ARGB);
+                        resizedImage = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_ARGB);
                         resizedImage.getGraphics().drawImage(originalImage, 0, 0, newWidth, newHeight, null);
                         label.setIcon(new ImageIcon(resizedImage));
                     } catch (IllegalArgumentException | OutOfMemoryError | NegativeArraySizeException ex) {
@@ -110,7 +121,18 @@ public class ChangeSizeStrategy implements ImageEditStrategy {
             }
         };
 
+        saveButton.addActionListener(e -> {
+            DirectoryChooser directoryChooser = new DirectoryChooser("Save resized image", true);
+            File toSave = directoryChooser.getSelectedFile();
+            try {
+                ImageIO.write(resizedImage, "jpg", toSave);
+                JOptionPane.showMessageDialog(null, "Image saved successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+            } catch (IOException ex) {
+                GalleryLogger.logError(ex.toString());
+            }
+        });
         widthField.getDocument().addDocumentListener(sizeChangeListener);
         heightField.getDocument().addDocumentListener(sizeChangeListener);
     }
 }
+

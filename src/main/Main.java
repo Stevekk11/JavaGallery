@@ -27,6 +27,7 @@ public class Main {
             Gallery gallery = new Gallery();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
+            GalleryLogger.logError(e.toString());
         }
     }
 

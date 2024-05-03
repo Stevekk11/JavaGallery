@@ -12,7 +12,7 @@ public class GalleryLogger {
 
     static {
         try {
-            fh = new FileHandler("log.log");
+            fh = new FileHandler("log.log",true);
             SimpleFormatter formatter = new SimpleFormatter();
             fh.setFormatter(formatter);
             logger.addHandler(fh);
@@ -28,6 +28,5 @@ public class GalleryLogger {
      */
     public static void logError(String message) {
         logger.severe(message);
-        fh.close();
     }
 }
