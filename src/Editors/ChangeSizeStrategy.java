@@ -58,6 +58,7 @@ public class ChangeSizeStrategy implements ImageEditStrategy {
         heightField.setFont(new Font("Arial", Font.PLAIN, 20));
 
         final Image originalImage = images.values().stream().skip(index).findFirst().orElse(null);
+        assert originalImage != null;
         final double aspectRatio = (double) originalImage.getWidth(null) / originalImage.getHeight(null);
         widthField.setText(originalImage.getWidth(null) + "");
         heightField.setText(originalImage.getHeight(null) + "");

@@ -1,6 +1,5 @@
 package Tests;
 
-import Loaders.DirectoryChooser;
 import main.Gallery;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,6 +17,7 @@ class GalleryTest {
     void setUp() throws UnsupportedLookAndFeelException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         gallery = new Gallery();
     }
+
     @Test
     void testInvoke(){
         assertNotNull(gallery);
