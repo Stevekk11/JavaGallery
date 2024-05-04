@@ -16,12 +16,12 @@ public class Delete {
 
     /**
      * Method for deleting images
-     * @param currentIndex
-     * @param images
-     * @param imgLabel
-     * @param imageLoader
-     * @param dialog
-     * @param path
+     * @param currentIndex index of the image
+     * @param images images hashmap
+     * @param imgLabel JLabel
+     * @param imageLoader class for loading images
+     * @param dialog JFrame for displaying image
+     * @param path filepath
      */
     public static void deleteImage(AtomicInteger currentIndex, HashMap<String, Image> images, JLabel imgLabel, ImageLoader imageLoader, JFrame dialog, String path){
         if (currentIndex.get() >= 0 && currentIndex.get() < images.size()) {

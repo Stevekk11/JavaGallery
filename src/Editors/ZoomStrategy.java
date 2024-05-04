@@ -53,7 +53,7 @@ public class ZoomStrategy implements ImageEditStrategy {
                         i++;
                     }
                 }
-            } catch (NumberFormatException | NegativeArraySizeException ex) {
+            } catch (NumberFormatException | NegativeArraySizeException | OutOfMemoryError ex) {
                 JOptionPane.showMessageDialog(zoomLevelFrame, "Invalid zoom level. Please enter a valid number.");
             } catch (IllegalArgumentException ex) {
                 JOptionPane.showMessageDialog(zoomLevelFrame, "Invalid zoom level. Please enter a positive number.");
