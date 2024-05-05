@@ -89,7 +89,10 @@ public class ChangeContrastStrategy implements ImageEditStrategy {
                 JOptionPane.showMessageDialog(null, "Image saved successfully!");
             } catch (IOException | IllegalArgumentException ex) {
                 GalleryLogger.logError(ex.toString());
-                JOptionPane.showMessageDialog(null, "Error saving image: " + ex.getMessage());
+                if (ex instanceof IllegalArgumentException) {
+                    JOptionPane.showMessageDialog(frame, "Saving cancelled by user!");
+
+                } else JOptionPane.showMessageDialog(frame, "Error saving image: " + ex.getMessage());
             }
         });
     }

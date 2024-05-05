@@ -114,6 +114,10 @@ public class ChangeCompressionStrategy extends JFrame implements ImageEditStrate
                         JOptionPane.showMessageDialog(this, "Image saved successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
                     } catch (IOException | IllegalArgumentException ex) {
                         GalleryLogger.logError(ex.toString());
+                        if (ex instanceof IllegalArgumentException) {
+                            JOptionPane.showMessageDialog(this, "Saving cancelled by user!");
+
+                        } else JOptionPane.showMessageDialog(this, "Error saving image: " + ex.getMessage());
                     }
             } else {
                 JOptionPane.showMessageDialog(this, "No compressed image available.", "Error", JOptionPane.ERROR_MESSAGE);

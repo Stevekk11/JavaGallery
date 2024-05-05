@@ -129,6 +129,10 @@ public class ChangeSizeStrategy implements ImageEditStrategy {
                 JOptionPane.showMessageDialog(null, "Image saved successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
             } catch (IOException | IllegalArgumentException ex) {
                 GalleryLogger.logError(ex.toString());
+                if (ex instanceof IllegalArgumentException) {
+                    JOptionPane.showMessageDialog(editFrame, "Saving cancelled by user!");
+
+                } else JOptionPane.showMessageDialog(editFrame, "Error saving image: " + ex.getMessage());
             }
         });
         widthField.getDocument().addDocumentListener(sizeChangeListener);

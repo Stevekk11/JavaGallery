@@ -66,7 +66,10 @@ public class ChangeBrightnessStrategy implements ImageEditStrategy {
                 JOptionPane.showMessageDialog(frame, "Image saved successfully!");
             } catch (IOException | IllegalArgumentException ex) {
                 GalleryLogger.logError(ex.toString());
-                JOptionPane.showMessageDialog(frame, "Error saving image: " + ex.getMessage());
+                if (ex instanceof IllegalArgumentException) {
+                    JOptionPane.showMessageDialog(frame, "Saving cancelled by user!");
+
+                } else JOptionPane.showMessageDialog(frame, "Error saving image: " + ex.getMessage());
             }
         });
 
@@ -78,7 +81,7 @@ public class ChangeBrightnessStrategy implements ImageEditStrategy {
                 int i = 0;
                 for (Map.Entry<String, Image> entry : images.entrySet()) {
                     if (i == index) {
-                        Image image = SetImageSize.setImageSize(entry.getValue().getWidth(null),entry.getValue().getHeight(null),entry.getValue());
+                        Image image = SetImageSize.setImageSize(entry.getValue().getWidth(null), entry.getValue().getHeight(null), entry.getValue());
                         BufferedImage bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
                         Graphics2D graphics = bufferedImage.createGraphics();
                         graphics.drawImage(image, 0, 0, null);
