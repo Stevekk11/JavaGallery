@@ -112,7 +112,7 @@ public class ChangeCompressionStrategy extends JFrame implements ImageEditStrate
                         // Save the compressed image to the selected file
                         ImageIO.write(compressedImage, "jpg", fileToSave);
                         JOptionPane.showMessageDialog(this, "Image saved successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
-                    } catch (IOException ex) {
+                    } catch (IOException | IllegalArgumentException ex) {
                         GalleryLogger.logError(ex.toString());
                     }
             } else {

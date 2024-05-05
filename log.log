@@ -1,2 +1,6 @@
 kvě 03, 2024 3:28:16 ODP. Logger.GalleryLogger logError
 SEVERE: java.lang.IllegalArgumentException: output == null!
+kvě 04, 2024 9:39:56 ODP. Logger.GalleryLogger logError
+SEVERE: java.lang.IllegalArgumentException: output == null!
+kvě 04, 2024 9:40:22 ODP. Logger.GalleryLogger logError
+SEVERE: java.lang.OutOfMemoryError: Java heap space

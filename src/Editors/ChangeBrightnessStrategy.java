@@ -64,7 +64,7 @@ public class ChangeBrightnessStrategy implements ImageEditStrategy {
             try {
                 ImageIO.write(changedImg, "png", fileToSave);
                 JOptionPane.showMessageDialog(frame, "Image saved successfully!");
-            } catch (IOException ex) {
+            } catch (IOException | IllegalArgumentException ex) {
                 GalleryLogger.logError(ex.toString());
                 JOptionPane.showMessageDialog(frame, "Error saving image: " + ex.getMessage());
             }

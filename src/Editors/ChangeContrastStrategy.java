@@ -87,7 +87,7 @@ public class ChangeContrastStrategy implements ImageEditStrategy {
                 // Write the changedImage to the selected file as a PNG image
                 ImageIO.write((RenderedImage) changedImage, "png", fileToSave);
                 JOptionPane.showMessageDialog(null, "Image saved successfully!");
-            } catch (IOException ex) {
+            } catch (IOException | IllegalArgumentException ex) {
                 GalleryLogger.logError(ex.toString());
                 JOptionPane.showMessageDialog(null, "Error saving image: " + ex.getMessage());
             }

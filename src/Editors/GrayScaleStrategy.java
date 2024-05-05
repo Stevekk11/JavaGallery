@@ -57,7 +57,7 @@ public class GrayScaleStrategy implements ImageEditStrategy {
             // Save the compressed image to the selected file
             ImageIO.write(bufferedImage, "jpg", toSave);
             JOptionPane.showMessageDialog(null, "Image saved successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
-        } catch (IOException ex) {
+        } catch (IOException | IllegalArgumentException ex) {
             GalleryLogger.logError(ex.toString());
         }
     }

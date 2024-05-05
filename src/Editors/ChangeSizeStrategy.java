@@ -127,7 +127,7 @@ public class ChangeSizeStrategy implements ImageEditStrategy {
             try {
                 ImageIO.write(resizedImage, "jpg", toSave);
                 JOptionPane.showMessageDialog(null, "Image saved successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
-            } catch (IOException ex) {
+            } catch (IOException | IllegalArgumentException ex) {
                 GalleryLogger.logError(ex.toString());
             }
         });
