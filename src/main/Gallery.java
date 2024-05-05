@@ -195,7 +195,7 @@ public class Gallery extends JFrame {
         exit.addActionListener(e -> System.exit(0));
         //show grid of images
         showGrid.addActionListener(e -> {
-            if (imageList != null && path != null) {imageList.showGrid(images, imageList);}});
+            if (imageList != null && path != null) {imageList.showGrid(imageList);}});
         //packs or chooses a directory
         pack.addActionListener(e -> {
             if (currentIndex.get() == 0) {path = chooser.chooseDirectory();

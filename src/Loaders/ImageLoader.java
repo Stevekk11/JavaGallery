@@ -143,12 +143,11 @@ public class ImageLoader {
      * Displays a grid layout of images from the provided HashMap and allows users to click on images
      * to view their properties.
      *
-     * @param images    A HashMap containing image filenames as keys and Image objects as values.
      * @param imageList An ImageLoader object to load and retrieve images.
      */
-    public void showGrid(HashMap<String, Image> images, ImageLoader imageList) {
+    public void showGrid(ImageLoader imageList) {
         imageList.load(); // Load the images
-        images = imageList.getImages();
+        HashMap<String, Image> images = imageList.getImages();
         JFrame grid = new JFrame("Overview of Images - Click an Image for Properties");
         grid.setLayout(new GridLayout(3, 0));
         grid.setIconImage(new ImageIcon("icons/photo.png").getImage());

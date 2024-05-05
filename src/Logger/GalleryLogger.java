@@ -29,4 +29,22 @@ public class GalleryLogger {
     public static void logError(String message) {
         logger.severe(message);
     }
+    public static void chooseLogFile(String fileName) {
+        if (fileName == null || fileName.trim().isEmpty()) {
+            logger.warning("Log file name is empty or null. Using default log file.");
+            return;
+        }
+        try {
+            if (fh != null) {
+                logger.removeHandler(fh);
+                fh.close();
+            }
+            fh = new FileHandler(fileName, true);
+            SimpleFormatter formatter = new SimpleFormatter();
+            fh.setFormatter(formatter);
+            logger.addHandler(fh);
+        } catch (IOException e) {
+            logger.log(Level.SEVERE, "Error setting log file", e);
+        }
+    }
 }

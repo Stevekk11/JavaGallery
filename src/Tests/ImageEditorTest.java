@@ -38,6 +38,5 @@ class ImageEditorTest {
     void editImage() {
         grayScaleStrategy.editImage(imageHashMap,0,labelAfter);
         assertNotEquals(labelAfter,labelBefore);
-
     }
 }

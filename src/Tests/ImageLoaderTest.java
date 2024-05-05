@@ -55,9 +55,9 @@ class ImageLoaderTest {
 
     @org.junit.jupiter.api.Test
     void testShowGrid() {
-        loader.showGrid(images, loader);
+        loader.showGrid(loader);
         assertNotNull(getGridFrame());
-        assertThrows(RuntimeException.class, () -> loader.showGrid(images,invalidLoader));
+        assertThrows(RuntimeException.class, () -> loader.showGrid(invalidLoader));
         JFrame grid = getGridFrame();
         Component[] components = grid.getContentPane().getComponents();
         assertEquals(13,components.length);

@@ -59,7 +59,7 @@ public class ChangeSizeStrategy implements ImageEditStrategy {
         panel.add(heightField);
         editFrame.add(icons);
         editFrame.add(panel);
-        editFrame.setSize(300, 150);
+        editFrame.setSize(320, 150);
         editFrame.setVisible(true);
         editFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         editFrame.setLocationRelativeTo(null);
