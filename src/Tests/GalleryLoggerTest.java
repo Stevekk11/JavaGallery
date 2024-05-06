@@ -12,6 +12,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.logging.Logger;
 
 class GalleryLoggerTest {
     BufferedReader br;
@@ -28,6 +29,7 @@ class GalleryLoggerTest {
         try {
             throw new IllegalStateException(testMessage);
         } catch (Exception e) {
+            assertTrue(e.getClass().isAssignableFrom(IllegalStateException.class));
             GalleryLogger.logError(e.getMessage());
             // Read the first line from the log file
             br.readLine();

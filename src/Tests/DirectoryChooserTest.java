@@ -24,7 +24,7 @@ class DirectoryChooserTest {
         assertNotEquals(directoryChooser.getFileSelectionMode(),savingDirectoryChooser.getFileSelectionMode());
         assertEquals("changedImg.png",savingDirectoryChooser.getSelectedFile().getName());
         assertNotNull(directoryChooser);
-        assertTrue(directoryChooser.getFileSelectionMode() == JFileChooser.DIRECTORIES_ONLY);
-        assertTrue(savingDirectoryChooser.getFileSelectionMode() == JFileChooser.FILES_ONLY);
+        assertEquals(JFileChooser.DIRECTORIES_ONLY, directoryChooser.getFileSelectionMode());
+        assertEquals(JFileChooser.FILES_ONLY, savingDirectoryChooser.getFileSelectionMode());
     }
 }
