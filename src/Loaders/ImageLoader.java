@@ -13,6 +13,10 @@ import java.util.*;
 
 import Logger.GalleryLogger;
 
+/**
+ * This class is used for loading images from a folder.
+ * Uses a HashMap for storage
+ */
 public class ImageLoader {
     private HashMap<String, Image> images;
     private final String path;

@@ -9,6 +9,9 @@ import java.awt.event.WindowEvent;
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * Utility editing method
+ */
 public class Edit {
 
     private static boolean isEditorOpen;
