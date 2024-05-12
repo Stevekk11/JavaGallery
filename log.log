@@ -4,3 +4,17 @@ kvě 05, 2024 5:26:22 ODP. Logger.GalleryLogger logError
 SEVERE: java.lang.IllegalArgumentException: output == null!
 kvě 05, 2024 5:34:53 ODP. Logger.GalleryLogger logError
 SEVERE: java.lang.IllegalArgumentException: output == null!
+kvě 10, 2024 12:57:20 ODP. Logger.GalleryLogger logError
+SEVERE: java.lang.IllegalArgumentException: output == null!
+kvě 10, 2024 12:58:19 ODP. Logger.GalleryLogger logError
+SEVERE: java.lang.NullPointerException: Cannot invoke "java.awt.Image.getWidth(java.awt.image.ImageObserver)" because "retVal" is null
+kvě 10, 2024 12:58:20 ODP. Logger.GalleryLogger logError
+SEVERE: java.lang.NullPointerException: Cannot invoke "java.awt.Image.getWidth(java.awt.image.ImageObserver)" because "retVal" is null
+kvě 10, 2024 12:58:24 ODP. Logger.GalleryLogger logError
+SEVERE: java.lang.NullPointerException: Cannot invoke "java.awt.Image.getWidth(java.awt.image.ImageObserver)" because "retVal" is null
+kvě 10, 2024 12:58:25 ODP. Logger.GalleryLogger logError
+SEVERE: java.lang.NullPointerException: Cannot invoke "java.awt.Image.getWidth(java.awt.image.ImageObserver)" because "retVal" is null
+kvě 10, 2024 12:58:25 ODP. Logger.GalleryLogger logError
+SEVERE: java.lang.NullPointerException: Cannot invoke "java.awt.Image.getWidth(java.awt.image.ImageObserver)" because "retVal" is null
+kvě 10, 2024 12:58:26 ODP. Logger.GalleryLogger logError
+SEVERE: java.lang.IllegalArgumentException: output == null!
