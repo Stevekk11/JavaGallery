@@ -63,7 +63,7 @@ public class Gallery extends JFrame {
      */
     private void init() {
         setTitle("Image Gallery");
-        setSize(750, 470);
+        setSize(780, 470);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setVisible(true);

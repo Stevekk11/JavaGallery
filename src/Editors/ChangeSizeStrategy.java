@@ -126,7 +126,7 @@ public class ChangeSizeStrategy implements ImageEditStrategy {
             DirectoryChooser directoryChooser = new DirectoryChooser("Save resized image", true);
             File toSave = directoryChooser.getSelectedFile();
             try {
-                ImageIO.write(resizedImage, "jpg", toSave);
+                ImageIO.write(resizedImage, "png", toSave);
                 JOptionPane.showMessageDialog(null, "Image saved successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
             } catch (IOException | IllegalArgumentException ex) {
                 GalleryLogger.logError(ex.toString());
