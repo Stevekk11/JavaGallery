@@ -50,10 +50,11 @@ public class Main {
         String command = "cloc.exe";
         ProcessBuilder pb = new ProcessBuilder(command, "src");
         Process process = pb.start();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-        String line;
-        while ((line = reader.readLine()) != null) {
-            System.out.println(line);
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))){
+            String line;
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+            }
         }
     }
 }
