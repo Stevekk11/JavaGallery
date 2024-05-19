@@ -29,6 +29,11 @@ public class GalleryLogger {
     public static void logError(String message) {
         logger.severe(message);
     }
+
+    /**
+     * Method to change the log output file
+     * @param fileName the name of the output file
+     */
     public static void chooseLogFile(String fileName) {
         if (fileName == null || fileName.trim().isEmpty()) {
             logger.warning("Log file name is empty or null. Using default log file.");

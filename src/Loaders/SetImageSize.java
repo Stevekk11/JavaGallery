@@ -3,6 +3,9 @@ package Loaders;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Class for setting image sizes based on dimensions
+ */
 public class SetImageSize {
     /**
      * No instantiation

@@ -18,3 +18,9 @@ kvě 10, 2024 12:58:25 ODP. Logger.GalleryLogger logError
 SEVERE: java.lang.NullPointerException: Cannot invoke "java.awt.Image.getWidth(java.awt.image.ImageObserver)" because "retVal" is null
 kvě 10, 2024 12:58:26 ODP. Logger.GalleryLogger logError
 SEVERE: java.lang.IllegalArgumentException: output == null!
+kvě 19, 2024 12:14:21 ODP. Logger.GalleryLogger logError
+SEVERE: java.lang.NullPointerException: Cannot invoke "java.net.URL.toExternalForm()" because "location" is null
+kvě 19, 2024 12:18:57 ODP. Logger.GalleryLogger logError
+SEVERE: java.lang.NullPointerException: Cannot invoke "java.net.URL.toExternalForm()" because "location" is null
+kvě 19, 2024 12:27:26 ODP. Logger.GalleryLogger logError
+SEVERE: java.lang.NullPointerException: Cannot invoke "java.net.URL.toExternalForm()" because "location" is null

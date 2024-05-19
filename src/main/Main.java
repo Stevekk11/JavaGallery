@@ -23,7 +23,7 @@ public class Main {
     private static void runApplication() {
         setGlobalExceptionHandler();
         try {
-            linesOfCode();
+            //linesOfCode();
             Gallery gallery = new Gallery();
         } catch (Exception e) {
             GalleryLogger.logError(e.toString());
